@@ -1,0 +1,10 @@
+[package]
+name = "tiny-tile-proxy"
+version = "0.0.1"
+edition = "2021"
+
+[[bin]]
+name = "TinyTileProxy"
+path = "src/main.rs"
+
+[dependencies]
