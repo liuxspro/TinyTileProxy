@@ -10,6 +10,7 @@ path = "src/main.rs"
 [dependencies]
 reqwest = "0.12.7"
 rocket = "0.5.1"
+rust-embed = "8.5.0"
 tokio = { version = "1", features = ["full"] }
 
 # https://doc.rust-lang.org/cargo/reference/profiles.html

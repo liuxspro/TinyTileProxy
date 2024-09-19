@@ -3,7 +3,6 @@ pub mod geocloud;
 #[cfg(test)]
 mod tests {
     use super::*;
-    // use std::fs::write;
 
     #[tokio::test]
     async fn get_geocloud_tile() {

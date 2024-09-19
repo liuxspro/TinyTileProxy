@@ -3,7 +3,7 @@ extern crate rocket;
 
 use rocket::response::content::RawXml;
 use rocket::{http::Status, response::status};
-use std::fs;
+use rust_embed::Embed;
 
 mod libs;
 use libs::geocloud::get_geocloud_tile;
@@ -30,10 +30,14 @@ async fn get_geocloud(
     }
 }
 
+#[derive(Embed)]
+#[folder = "assets"]
+struct Asset;
+
 #[get("/WMTS/geocloud")]
 fn get_geocloud_wmts() -> RawXml<String> {
-    let file_content = fs::read_to_string("geocloud.xml").expect("Unable to read file");
-    // 返回 XML 内容
+    let wmts_xml = Asset::get("wmts/geocloud.xml").unwrap();
+    let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
     RawXml(file_content)
 }
 
@@ -41,6 +45,6 @@ fn get_geocloud_wmts() -> RawXml<String> {
 fn rocket() -> _ {
     println!("Tiny Tile Proxy");
     println!("");
-    println!("使用: 将 http://127.0.0.1:8000/WMTS/geocloud 添加为 QGIS WMTS 连接");
+    println!("使用: 将 http://127.0.0.1:8000/WMTS/geocloud 添加为 QGIS WMTS 连接\n");
     rocket::build().mount("/", routes![get_geocloud, get_geocloud_wmts])
 }
