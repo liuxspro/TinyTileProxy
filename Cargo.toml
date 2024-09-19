@@ -9,4 +9,13 @@ path = "src/main.rs"
 
 [dependencies]
 reqwest = "0.12.7"
+rocket = "0.5.1"
 tokio = { version = "1", features = ["full"] }
+
+# https://doc.rust-lang.org/cargo/reference/profiles.html
+[profile.release]
+codegen-units = 1 # 控制代码生成的单元数量
+lto = true        # 启用链接时优化, 减少生成的二进制文件的大小并提高性能
+opt-level = "s"   # 设置优化级别
+panic = "unwind"  # 控制 panic 时的行为 unwind: 在 panic 时展开堆栈
+strip = true      # 控制是否剥离生成的二进制文件中的符号信息
