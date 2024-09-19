@@ -1,12 +1,16 @@
 #[macro_use]
 extern crate rocket;
 
+use figment::Figment;
 use rocket::response::content::RawXml;
+use rocket::Config;
 use rocket::{http::Status, response::status};
 use rust_embed::Embed;
 
 mod libs;
+
 use libs::geocloud::get_geocloud_tile;
+use libs::utils::{get_local_config_data, get_tk_from_local_config};
 use rocket::http::ContentType;
 
 #[derive(FromForm)]
@@ -43,8 +47,19 @@ fn get_geocloud_wmts() -> RawXml<String> {
 
 #[launch]
 fn rocket() -> _ {
-    println!("Tiny Tile Proxy");
-    println!("");
-    println!("使用: 将 http://127.0.0.1:8000/WMTS/geocloud 添加为 QGIS WMTS 连接\n");
-    rocket::build().mount("/", routes![get_geocloud, get_geocloud_wmts])
+    println!("Tiny Tile Proxy\n");
+
+    let local_config = get_local_config_data();
+    let figment = Figment::from(rocket::Config::default()).merge(local_config.nested());
+
+    let config: Config = figment.extract().expect("Failed to extract config");
+
+    // 获取 port 值
+    let port = config.port;
+    println!("使用: 将 http://127.0.0.1:{port}/WMTS/geocloud 添加为 QGIS WMTS 连接\n");
+
+    // 获取 tk 值
+    let tk = get_tk_from_local_config();
+    println!("tk 值: {}", tk);
+    rocket::custom(figment).mount("/", routes![get_geocloud, get_geocloud_wmts])
 }

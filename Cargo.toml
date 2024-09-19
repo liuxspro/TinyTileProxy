@@ -8,6 +8,7 @@ name = "TinyTileProxy"
 path = "src/main.rs"
 
 [dependencies]
+figment = "0.10.19"
 reqwest = "0.12.7"
 rocket = "0.5.1"
 rust-embed = "8.5.0"

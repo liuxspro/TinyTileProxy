@@ -1733,6 +1733,7 @@ dependencies = [
 name = "tiny-tile-proxy"
 version = "0.0.1"
 dependencies = [
+ "figment",
  "reqwest",
  "rocket",
  "rust-embed",
