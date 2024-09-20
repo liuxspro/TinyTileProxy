@@ -2,9 +2,14 @@ use std::collections::HashMap;
 
 use reqwest::Error;
 
-fn create_parms(z: u32, x: u32, y: u32, layer: String) -> HashMap<&'static str, String> {
+fn create_parms(
+    z: u32,
+    x: u32,
+    y: u32,
+    layer: String,
+    tk: String,
+) -> HashMap<&'static str, String> {
     let mut params = HashMap::new();
-    let tk:String = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJnZW9jbG91ZCIsImV4cCI6MTcyNzI1NTM3NH0.wdDEJ8-n8ylzF8g2ludHRWVX9TTqLO7u_nRbItX-v7M".to_string();
 
     params.insert("tk", tk);
     params.insert("Width", "256".to_string());
@@ -24,13 +29,19 @@ fn create_parms(z: u32, x: u32, y: u32, layer: String) -> HashMap<&'static str, 
     return params;
 }
 
-pub async fn get_geocloud_tile(z: u32, x: u32, y: u32, layer: String) -> Result<Vec<u8>, Error> {
+pub async fn get_geocloud_tile(
+    z: u32,
+    x: u32,
+    y: u32,
+    layer: String,
+    tk: String,
+) -> Result<Vec<u8>, Error> {
     let url = format!(
         "https://igss.cgs.gov.cn:6160/igs/rest/ogc/{}/WMTSServer",
         layer
     );
 
-    let params = create_parms(z, x, y, layer);
+    let params = create_parms(z, x, y, layer, tk);
 
     let client = reqwest::Client::builder().build()?;
     // 发送 GET 请求

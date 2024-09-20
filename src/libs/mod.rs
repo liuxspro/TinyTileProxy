@@ -7,8 +7,9 @@ mod tests {
 
     #[tokio::test]
     async fn get_geocloud_tile() {
+        let tk = utils::get_tk_from_local_config();
         let result =
-            geocloud::get_geocloud_tile(4, 24, 5, "qg250w_20210416_ZAZSeOGX".to_string()).await;
+            geocloud::get_geocloud_tile(4, 24, 5, "qg250w_20210416_ZAZSeOGX".to_string(), tk).await;
 
         assert!(result.is_ok(), "get_geocloud_tile should return Ok");
         // 如果结果为 Ok，进一步验证返回的 body 是否符合预期
