@@ -16,8 +16,8 @@
     </ows:ServiceIdentification>
     <Contents>
         <Layer>
-            <ows:Title>全国1/250万地质图</ows:Title>
-            <ows:Abstract></ows:Abstract>
+            <ows:Title>1 全国1/250万地质图</ows:Title>
+            <ows:Abstract>地质云 - 全国1/150万地质图</ows:Abstract>
             <ows:WGS84BoundingBox>
                 <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
                 <ows:UpperCorner>180.0 90</ows:UpperCorner>
@@ -34,8 +34,8 @@
                 template="http://127.0.0.1:8000/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg250w_20210416_ZAZSeOGX" />
         </Layer>
         <Layer>
-            <ows:Title>全国1/150万地质图</ows:Title>
-            <ows:Abstract></ows:Abstract>
+            <ows:Title>2 全国1/150万地质图</ows:Title>
+            <ows:Abstract>地质云 - 全国1/150万地质图</ows:Abstract>
             <ows:WGS84BoundingBox>
                 <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
                 <ows:UpperCorner>180.0 90</ows:UpperCorner>
@@ -51,7 +51,44 @@
             <ResourceURL format="image/png" resourceType="tile"
                 template="http://127.0.0.1:8000/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg150w_20210416_BIwqE0wU" />
         </Layer>
+        <Layer>
+            <ows:Title>3 全国1/100万地质图</ows:Title>
+            <ows:Abstract>地质云 - 全国1/100万地质图</ows:Abstract>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
+                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <ows:Identifier>全国100万地质图_20210330_rpam5kdJ</ows:Identifier>
+            <Style>
+                <ows:Identifier>default</ows:Identifier>
+            </Style>
+            <Format>image/png</Format>
+            <TileMatrixSetLink>
+                <TileMatrixSet>default028mm</TileMatrixSet>
+            </TileMatrixSetLink>
+            <ResourceURL format="image/png" resourceType="tile"
+                template="http://127.0.0.1:8000/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=%E5%85%A8%E5%9B%BD100%E4%B8%87%E5%9C%B0%E8%B4%A8%E5%9B%BE_20210330_rpam5kdJ" />
+        </Layer>
+        <Layer>
+            <ows:Title>4 全国1/50万地质图</ows:Title>
+            <ows:Abstract>地质云 - 全国1/50万地质图</ows:Abstract>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
+                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <ows:Identifier>qg50w_20210416_F7qGy9A7</ows:Identifier>
+            <Style>
+                <ows:Identifier>default</ows:Identifier>
+            </Style>
+            <Format>image/png</Format>
+            <TileMatrixSetLink>
+                <TileMatrixSet>default028mm</TileMatrixSet>
+            </TileMatrixSetLink>
+            <ResourceURL format="image/png" resourceType="tile"
+                template="http://127.0.0.1:8000/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg50w_20210416_F7qGy9A7" />
+        </Layer>
 
+        <!-- 瓦片矩阵集 -->
         <TileMatrixSet>
             <ows:Identifier>default028mm</ows:Identifier>
             <ows:SupportedCRS>urn:ogc:def:crs:EPSG::4490</ows:SupportedCRS>
@@ -237,5 +274,4 @@
             </TileMatrix>
         </TileMatrixSet>
     </Contents>
-    <ServiceMetadataURL xlink:href="http://127.0.0.1:8080/wmts/1.0.0/WMTSCapabilities.xml" />
 </Capabilities>
