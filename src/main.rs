@@ -2,43 +2,20 @@
 extern crate rocket;
 
 use figment::Figment;
-use rocket::http::ContentType;
 use rocket::response::content::RawXml;
 use rocket::Config;
-use rocket::State;
-use rocket::{http::Status, response::status};
 use rust_embed::Embed;
 
 mod libs;
+mod routers;
 
-use libs::geocloud::get_geocloud_tile;
-use libs::utils::{create_default_config_file, get_local_config_data, get_tk_from_local_config};
-
-#[derive(FromForm)]
-struct GeoCloudQuery {
-    layer: String,
-}
-
-struct Token {
-    tk: String,
-}
-
-#[get("/getTile/geocloud/<z>/<x>/<y>?<query..>")]
-async fn get_geocloud(
-    z: u32,
-    x: u32,
-    y: u32,
-    query: GeoCloudQuery,
-    token: &State<Token>,
-) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
-    match get_geocloud_tile(z, x, y, query.layer, token.tk.clone()).await {
-        Ok(body) => Ok((ContentType::PNG, body)),
-        Err(e) => Err(status::Custom(
-            Status::InternalServerError,
-            format!("Error is: {}", e),
-        )),
-    }
-}
+use libs::utils::{
+    create_default_config_file, get_local_config_data, get_local_ip, get_tk_from_local_config,
+    Tokens,
+};
+use routers::geocloud::get_geocloud;
+use routers::index::index;
+use routers::jilin1::get_jl1;
 
 #[derive(Embed)]
 #[folder = "assets"]
@@ -54,6 +31,8 @@ fn get_geocloud_wmts() -> RawXml<String> {
 #[launch]
 fn rocket() -> _ {
     println!("Tiny Tile Proxy\n");
+    let ip = get_local_ip().expect("Failed to get local IP address");
+    println!("{}", ip);
     create_default_config_file().unwrap();
     let local_config = get_local_config_data();
     let figment = Figment::from(rocket::Config::default()).merge(local_config.nested());
@@ -64,9 +43,18 @@ fn rocket() -> _ {
     let port = config.port;
     println!("使用: 将 http://127.0.0.1:{port}/WMTS/geocloud 添加为 QGIS WMTS 连接\n");
 
-    // // 获取 tk 值
-    let tk = get_tk_from_local_config();
+    // 获取 tk 值
+    let tk = get_tk_from_local_config().unwrap();
+    if tk.jl1 == "" {
+        panic!("Error: jilin1 tk not set");
+    }
     rocket::custom(figment)
-        .manage(Token { tk })
-        .mount("/", routes![get_geocloud, get_geocloud_wmts])
+        .manage(Tokens {
+            geocloud: tk.geocloud,
+            jl1: tk.jl1,
+        })
+        .mount(
+            "/",
+            routes![index, get_geocloud, get_jl1, get_geocloud_wmts],
+        )
 }

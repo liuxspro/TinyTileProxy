@@ -8,10 +8,12 @@ name = "TinyTileProxy"
 path = "src/main.rs"
 
 [dependencies]
-figment = "0.10.19"
-reqwest = "0.12.7"
+figment = { version = "0.10", features = ["toml"] }
+reqwest = { version = "0.12", features = ["gzip"] }
+serde = { version = "1.0", features = ["derive"] }
 rocket = "0.5.1"
 rust-embed = "8.5.0"
+image = "0.25.2"
 tokio = { version = "1", features = ["full"] }
 
 # https://doc.rust-lang.org/cargo/reference/profiles.html
