@@ -3,7 +3,7 @@ use rocket::State;
 use rocket::{http::Status, response::status};
 
 use crate::libs::jilin1::get_jl_tile;
-use crate::libs::utils::{is_webp, webp_to_png, Tokens};
+use crate::libs::utils::{is_webp, webp_to_png, ServerConfig};
 
 #[derive(FromForm)]
 pub(crate) struct JiLin1Query {
@@ -16,9 +16,9 @@ pub async fn get_jl1(
     x: u32,
     y: u32,
     query: JiLin1Query,
-    token: &State<Tokens>,
+    config: &State<ServerConfig>,
 ) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
-    let tk = &token.jl1;
+    let tk = &config.tokens.jl1;
     if tk == "" {
         // eprintln!("Error: jilin1 tk not set");
         return Err(status::Custom(

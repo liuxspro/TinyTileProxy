@@ -4,16 +4,22 @@ use figment::{
 };
 use image::ImageFormat;
 use serde::Deserialize;
-use std::fs::File;
 use std::io::Cursor;
 use std::io::{self, Write};
 use std::net::{IpAddr, TcpStream};
 use std::path::Path;
+use std::{fs::File, net::Ipv4Addr};
 
 #[derive(Deserialize)]
 pub struct Tokens {
     pub geocloud: String,
     pub jl1: String,
+}
+
+pub struct ServerConfig {
+    pub ip: String,
+    pub port: u16,
+    pub tokens: Tokens,
 }
 
 pub fn get_tk_from_local_config() -> Result<Tokens, figment::Error> {
@@ -99,4 +105,11 @@ pub fn get_local_ip() -> Option<IpAddr> {
         }
     }
     None
+}
+
+pub fn is_unspecified(ip: IpAddr) -> bool {
+    match ip {
+        IpAddr::V4(ipv4) => ipv4 == Ipv4Addr::UNSPECIFIED,
+        IpAddr::V6(_) => false,
+    }
 }
