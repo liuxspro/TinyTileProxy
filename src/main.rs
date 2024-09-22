@@ -11,6 +11,7 @@ use libs::utils::{
     create_default_config_file, get_local_config_data, get_local_ip, get_tk_from_local_config,
     is_unspecified, ServerConfig,
 };
+use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
 use routers::index::index;
 use routers::jilin1::get_jl1;
@@ -56,6 +57,13 @@ fn rocket() -> _ {
         })
         .mount(
             "/",
-            routes![index, get_geocloud, get_jl1, get_geocloud_wmts],
+            routes![
+                index,
+                get_geocloud,
+                get_jl1,
+                get_geocloud_wmts,
+                docs,
+                static_file
+            ],
         )
 }
