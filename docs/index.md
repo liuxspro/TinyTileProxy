@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Tile Tile Proxy"
+  name: "Tiny Tile Proxy"
   # text: "A VitePress Site"
   tagline: A Simple Tile Porxy Server
   image:
@@ -18,10 +18,10 @@ hero:
     #   link: /api-examples
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: 📄 WMTS 服务
+    details: 代理一些常用但是 QGIS 不能正常加载的 WMTS 服务
+  - title: 📦 XYZ/TMS to WMTS
+    details: 也许对 Arcmap 有用?🤔
+  # - title: 💯开源
+  #   details: Code with ♥️
 ---
