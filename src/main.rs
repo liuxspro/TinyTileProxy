@@ -15,7 +15,7 @@ use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
 use routers::index::index;
 use routers::jilin1::get_jl1;
-use routers::wmts::get_geocloud_wmts;
+use routers::wmts::{get_geocloud_wmts, get_jl1_wmts};
 
 #[launch]
 fn rocket() -> _ {
@@ -63,7 +63,8 @@ fn rocket() -> _ {
                 get_jl1,
                 get_geocloud_wmts,
                 docs,
-                static_file
+                static_file,
+                get_jl1_wmts,
             ],
         )
 }
