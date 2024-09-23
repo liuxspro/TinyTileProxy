@@ -10,11 +10,12 @@ mod tests {
     async fn get_geocloud_tile() {
         let tk = utils::get_tk_from_local_config().unwrap();
         let result = geocloud::get_geocloud_tile(
-            4,
+            "4",
             24,
             5,
             "qg250w_20210416_ZAZSeOGX".to_string(),
             tk.geocloud,
+            None,
         )
         .await;
 

@@ -45,7 +45,7 @@ fn rocket() -> _ {
     // 获取 tk 值
     let tk = get_tk_from_local_config().unwrap();
     if tk.jl1 == "" {
-        panic!("Error: jilin1 tk not set");
+        eprintln!("Error: jilin1 tk not set");
     }
 
     println!("Server will be running at http://{}:{}\n", address, port);
