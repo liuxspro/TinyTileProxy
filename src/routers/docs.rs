@@ -6,7 +6,7 @@ use std::ffi::OsStr;
 use std::path::PathBuf;
 
 #[derive(Embed)]
-#[folder = "web/doc_build/"]
+#[folder = "docs/.vitepress/dist"]
 struct Asset;
 
 #[get("/docs")]
