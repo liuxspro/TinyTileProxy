@@ -44,3 +44,10 @@ pub fn get_jl1_wmts(config: &State<ServerConfig>) -> RawXml<String> {
     let rendered = tera.render("jl1.xml", &context).unwrap();
     RawXml(rendered)
 }
+
+#[get("/WMTS/xyz")]
+pub fn get_xyz_wmts() -> RawXml<String> {
+    let wmts_xml = Asset::get("wmts/xyz.xml").unwrap();
+    let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
+    RawXml(file_content)
+}
