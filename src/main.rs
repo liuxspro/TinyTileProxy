@@ -48,7 +48,8 @@ fn rocket() -> _ {
         eprintln!("Error: jilin1 tk not set");
     }
 
-    println!("Server will be running at http://{}:{}\n", address, port);
+    // println!("Server will be running at http://{}:{}\n", address, port);
+    println!("使用浏览器访问: http://{}:{} 查看使用方法\n", address, port);
     rocket::custom(figment)
         .manage(ServerConfig {
             ip: address.to_string(),
