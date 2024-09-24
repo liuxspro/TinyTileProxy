@@ -16,6 +16,12 @@ pub struct Tokens {
     pub jl1: String,
 }
 
+pub struct ZXY {
+    pub z: String,
+    pub x: u32,
+    pub y: u32,
+}
+
 pub struct ServerConfig {
     pub ip: String,
     pub port: u16,

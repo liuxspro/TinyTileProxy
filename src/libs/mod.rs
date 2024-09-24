@@ -4,15 +4,20 @@ pub mod utils;
 
 #[cfg(test)]
 mod tests {
+    use utils::ZXY;
+
     use super::*;
 
     #[tokio::test]
     async fn get_geocloud_tile() {
         let tk = utils::get_tk_from_local_config().unwrap();
+        let zxy = ZXY {
+            z: "4".to_string(),
+            x: 24,
+            y: 5,
+        };
         let result = geocloud::get_geocloud_tile(
-            "4",
-            24,
-            5,
+            zxy,
             "qg250w_20210416_ZAZSeOGX".to_string(),
             tk.geocloud,
             None,

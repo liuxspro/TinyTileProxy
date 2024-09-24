@@ -3,7 +3,7 @@ use rocket::State;
 use rocket::{http::Status, response::status};
 
 use crate::libs::geocloud::get_geocloud_tile;
-use crate::libs::utils::ServerConfig;
+use crate::libs::utils::{ServerConfig, ZXY};
 
 #[derive(FromForm)]
 pub(crate) struct GeoCloudQuery {
@@ -19,10 +19,13 @@ pub async fn get_geocloud(
     query: GeoCloudQuery,
     config: &State<ServerConfig>,
 ) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
-    match get_geocloud_tile(
-        z,
+    let zxy = ZXY {
+        z: z.to_string(),
         x,
         y,
+    };
+    match get_geocloud_tile(
+        zxy,
         query.layer,
         config.tokens.geocloud.clone(),
         query.tilematrixset,

@@ -2,10 +2,10 @@ use std::collections::HashMap;
 
 use reqwest::Error;
 
+use crate::libs::utils::ZXY;
+
 fn create_parms(
-    z: &str,
-    x: u32,
-    y: u32,
+    zxy: ZXY,
     layer: String,
     tk: String,
     tilematrixset: Option<String>,
@@ -29,17 +29,15 @@ fn create_parms(
     params.insert("Request", "GetTile".to_string());
     params.insert("Version", "1.0.0".to_string());
     params.insert("Format", "image%2Fpng".to_string());
-    params.insert("TileMatrix", z.to_string());
-    params.insert("TileCol", x.to_string());
-    params.insert("TileRow", y.to_string());
+    params.insert("TileMatrix", zxy.z);
+    params.insert("TileCol", zxy.x.to_string());
+    params.insert("TileRow", zxy.y.to_string());
 
     return params;
 }
 
 pub async fn get_geocloud_tile(
-    z: &str,
-    x: u32,
-    y: u32,
+    zxy: ZXY,
     layer: String,
     tk: String,
     tilematrixset: Option<String>,
@@ -49,7 +47,7 @@ pub async fn get_geocloud_tile(
         layer
     );
 
-    let params = create_parms(z, x, y, layer, tk, tilematrixset);
+    let params = create_parms(zxy, layer, tk, tilematrixset);
 
     let client = reqwest::Client::builder().build()?;
     // 发送 GET 请求
