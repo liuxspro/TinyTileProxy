@@ -57,7 +57,7 @@ address = "127.0.0.1"
 port = 8000
 
 [tokens]
-geocloud = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJnZW9jbG91ZCIsImV4cCI6MTcyNzI1NTM3NH0.wdDEJ8-n8ylzF8g2ludHRWVX9TTqLO7u_nRbItX-v7M"
+geocloud = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJnZW9jbG91ZCIsImV4cCI6MTcyNzg2MDE4Nn0.Nk9RV5m-5uVcMOzUAo7JtZaamrYDxxRf5-hKvQl3agg"
 jl1 = ""
 "#;
 

@@ -32,7 +32,18 @@ pub async fn get_geocloud(
     )
     .await
     {
-        Ok(body) => Ok((ContentType::PNG, body)),
+        Ok(body) => {
+            // token 过期时提示 b"token\xe5\xb7\xb2\xe8\xbf\x87\xe6\x9c\x9f"（token已过期）
+            let token_ex: &[u8] = b"token\xe5\xb7\xb2\xe8\xbf\x87\xe6\x9c\x9f";
+            if &body[..token_ex.len()] == token_ex {
+                Err(status::Custom(
+                    Status::NotFound,
+                    format!("{}", String::from_utf8_lossy(token_ex)),
+                ))
+            } else {
+                Ok((ContentType::PNG, body))
+            }
+        }
         Err(e) => Err(status::Custom(
             Status::InternalServerError,
             format!("Error is: {}", e),
