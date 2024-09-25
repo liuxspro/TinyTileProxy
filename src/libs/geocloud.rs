@@ -54,6 +54,6 @@ pub async fn get_geocloud_tile(
     let response = client.get(url).query(&params).send().await?;
     // println!("{} ", response.url().as_str());
     let body = response.bytes().await?;
-    println!("{:?}", body);
+    // println!("{:?}", body);
     Ok(body.to_vec())
 }
