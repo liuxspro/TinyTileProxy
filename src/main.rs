@@ -21,7 +21,7 @@ use routers::wmts::{get_geocloud_wmts, get_jl1_wmts, get_xyz_wmts};
 fn rocket() -> _ {
     create_default_config_file().unwrap();
 
-    println!("Tiny Tile Proxy\n");
+    println!("Tiny Tile Proxy\t Version: {}\n", env!("CARGO_PKG_VERSION"));
 
     let local_config = get_local_config_data();
     let figment = Figment::from(rocket::Config::default()).merge(local_config.nested());
@@ -44,10 +44,6 @@ fn rocket() -> _ {
 
     // 获取 tk 值
     let tk = get_tk_from_local_config().unwrap();
-    if tk.jl1 == "" {
-        eprintln!("Error: jilin1 tk not set");
-    }
-
     // println!("Server will be running at http://{}:{}\n", address, port);
     println!("使用浏览器访问: http://{}:{} 查看使用方法\n", address, port);
     rocket::custom(figment)
