@@ -21,7 +21,7 @@ use routers::wmts::{get_geocloud_wmts, get_jl1_wmts, get_xyz_wmts};
 fn rocket() -> _ {
     create_default_config_file().unwrap();
 
-    println!("Tiny Tile Proxy\t Version: {}\n", env!("CARGO_PKG_VERSION"));
+    println!("Tiny Tile Proxy\t v{}\n", env!("CARGO_PKG_VERSION"));
 
     let local_config = get_local_config_data();
     let figment = Figment::from(rocket::Config::default()).merge(local_config.nested());

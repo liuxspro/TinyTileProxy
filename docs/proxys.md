@@ -49,7 +49,7 @@ http://127.0.0.1/getTile/{z}/{x}/{y}?mk=<地图mk>
 
 > 2023 年全国 0.5 米吉林一号影像 mk: `73ad26c4aa6957eef051ecc5a15308b4`
 
-## 常用 XYZ 连接转 WMTS
+## 常用 XYZ 服务转 WMTS
 
 > 直连无代理
 
@@ -59,7 +59,7 @@ http://127.0.0.1/getTile/{z}/{x}/{y}?mk=<地图mk>
 - Google Map
 
 可通过 WMTS 链接加载
-<GetAddress path="/WMTS/xyz"/>
+<GetAddress path="/WMTS/XYZ"/>
 
 ::: info
 适合在不支持 XYZ 但支持 WMTS 的 Acrmap 中使用
