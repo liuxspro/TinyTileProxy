@@ -27,7 +27,7 @@ pub async fn get_jl1(
         ));
     }
     // 计算翻转后的Y
-    let reversed_y: u32 = 2u32.pow(z) - 1 - y;
+    let reversed_y: u32 = (1u32 << z) - 1 - y;
     match get_jl_tile(z, x, reversed_y, query.mk, tk.to_string()).await {
         Ok(body) => {
             if is_webp(&body) {
