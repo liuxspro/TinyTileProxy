@@ -1,6 +1,8 @@
+// use reqwest::Error;
 use rocket::http::ContentType;
 use rocket::State;
 use rocket::{http::Status, response::status};
+use std::collections::HashMap;
 
 use crate::libs::geocloud::get_geocloud_tile;
 use crate::libs::utils::{ServerConfig, ZXY};
@@ -49,4 +51,20 @@ pub async fn get_geocloud(
             format!("Error is: {}", e),
         )),
     }
+}
+
+#[get("/geocloud/wms?<params..>")]
+pub async fn _geocloud_wms(
+    params: HashMap<String, String>,
+) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
+    let base_url =
+        "https://igss.cgs.gov.cn:6160/igs/rest/ogc/doc/H50E022002_20201014_QusseidO/WMSServer";
+    let client = reqwest::Client::builder().build().unwrap();
+    // 发送 GET 请求
+    let response = client.get(base_url).query(&params).send().await.unwrap();
+    // println!("{} ", response.url().as_str());
+    let body = response.bytes().await.unwrap();
+    // println!("{:?}", body);
+    Ok((ContentType::PNG, body.to_vec()))
+    // format!("{:?}", params)
 }

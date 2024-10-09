@@ -51,3 +51,7 @@ pub fn get_xyz_wmts() -> RawXml<String> {
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
     RawXml(file_content)
 }
+
+pub fn routers() -> Vec<rocket::Route> {
+    routes![get_geocloud_wmts, get_jl1_wmts, get_xyz_wmts,]
+}

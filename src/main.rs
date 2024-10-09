@@ -15,7 +15,7 @@ use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
 use routers::index::index;
 use routers::jilin1::get_jl1;
-use routers::wmts::{get_geocloud_wmts, get_jl1_wmts, get_xyz_wmts};
+use routers::wmts;
 
 #[launch]
 fn rocket() -> _ {
@@ -46,23 +46,15 @@ fn rocket() -> _ {
     let tk = get_tk_from_local_config().unwrap();
     // println!("Server will be running at http://{}:{}\n", address, port);
     println!("使用浏览器访问: http://{}:{} 查看使用方法\n", address, port);
+
+    let mut routers = routes![index, get_geocloud, get_jl1, docs, static_file,];
+    routers.extend(wmts::routers());
+
     rocket::custom(figment)
         .manage(ServerConfig {
             ip: address.to_string(),
             port,
             tokens: tk,
         })
-        .mount(
-            "/",
-            routes![
-                index,
-                get_geocloud,
-                get_jl1,
-                get_geocloud_wmts,
-                docs,
-                static_file,
-                get_jl1_wmts,
-                get_xyz_wmts,
-            ],
-        )
+        .mount("/", routers)
 }
