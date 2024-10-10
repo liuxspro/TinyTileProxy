@@ -1,6 +1,5 @@
 ---
-title: Docs with VitePress
-editLink: true
+title: Proxys
 ---
 
 <script setup>
@@ -62,5 +61,5 @@ http://127.0.0.1/getTile/{z}/{x}/{y}?mk=<地图mk>
 <GetAddress path="/WMTS/XYZ"/>
 
 ::: info
-适合在不支持 XYZ 但支持 WMTS 的 Acrmap 中使用
+🤔 适合在 Acrmap 中使用
 :::
