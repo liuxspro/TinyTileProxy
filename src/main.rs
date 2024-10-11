@@ -8,8 +8,8 @@ mod libs;
 mod routers;
 
 use libs::utils::{
-    create_default_config_file, get_local_config_data, get_local_ip, get_tk_from_local_config,
-    is_unspecified, ServerConfig,
+    create_cache_dir, create_default_config_file, get_local_config_data, get_local_ip,
+    get_tk_from_local_config, is_unspecified, ServerConfig,
 };
 use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
@@ -20,6 +20,7 @@ use routers::wmts;
 #[launch]
 fn rocket() -> _ {
     create_default_config_file().unwrap();
+    create_cache_dir();
 
     println!("Tiny Tile Proxy\t v{}\n", env!("CARGO_PKG_VERSION"));
 

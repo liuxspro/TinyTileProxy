@@ -104,8 +104,8 @@ pub fn webp_to_png(webp_data: Vec<u8>) -> Result<Vec<u8>, Box<dyn std::error::Er
 }
 
 pub fn get_local_ip() -> Option<IpAddr> {
-    let google_dns = "223.5.5.5:53";
-    if let Ok(stream) = TcpStream::connect(google_dns) {
+    let ali_dns = "223.5.5.5:53";
+    if let Ok(stream) = TcpStream::connect(ali_dns) {
         if let Some(local_addr) = stream.local_addr().ok() {
             return Some(local_addr.ip());
         }
@@ -117,5 +117,18 @@ pub fn is_unspecified(ip: IpAddr) -> bool {
     match ip {
         IpAddr::V4(ipv4) => ipv4 == Ipv4Addr::UNSPECIFIED,
         IpAddr::V6(_) => false,
+    }
+}
+
+// pub fn get_tile_from_cache(map_name: &str, layer_name: &str, z: u32, x: u32, y: u32) {}
+
+pub fn create_cache_dir() {
+    // 获取当前工作目录
+    let current_dir = std::env::current_dir().expect("无法获取当前目录");
+    let cache_dir = current_dir.join("Cache");
+    if !cache_dir.exists() {
+        // 创建 Cache 文件夹
+        std::fs::create_dir(&cache_dir).expect("无法创建 Cache 文件夹");
+        // println!("Cache 文件夹已创建");
     }
 }

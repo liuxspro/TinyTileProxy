@@ -2,7 +2,7 @@ use rocket::http::ContentType;
 use rocket::State;
 use rocket::{http::Status, response::status};
 
-use crate::libs::jilin1::get_jl_tile;
+use crate::libs::jilin1::get_tile_from_cache;
 use crate::libs::utils::{is_webp, webp_to_png, ServerConfig};
 
 #[derive(FromForm)]
@@ -26,16 +26,13 @@ pub async fn get_jl1(
             format!("Error: jilin1 tk not set"),
         ));
     }
-    // 计算翻转后的Y
-    let reversed_y: u32 = (1u32 << z) - 1 - y;
-    match get_jl_tile(z, x, reversed_y, query.mk, tk.to_string()).await {
+    match get_tile_from_cache(z, x, y, query.mk, tk.to_string()).await {
         Ok(body) => {
             if is_webp(&body) {
                 //当你对 Vec<u8> 取引用时，你得到的是一个 &[u8]
                 let png_data = webp_to_png(body).unwrap();
                 Ok((ContentType::PNG, png_data))
             } else {
-                // eprintln!("{}/{}/{} : 原始图像不是webp", z, x, reversed_y);
                 Ok((ContentType::PNG, body))
             }
         }

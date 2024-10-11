@@ -26,3 +26,4 @@ dist-ssr
 *.sln
 *.sw?
 docs/.vitepress/cache
+Cache
