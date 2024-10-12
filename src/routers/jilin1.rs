@@ -3,7 +3,7 @@ use rocket::State;
 use rocket::{http::Status, response::status};
 
 use crate::libs::jilin1::get_tile_from_cache;
-use crate::libs::utils::{is_webp, webp_to_png, ServerConfig};
+use crate::libs::utils::ServerConfig;
 
 #[derive(FromForm)]
 pub(crate) struct JiLin1Query {
@@ -27,15 +27,7 @@ pub async fn get_jl1(
         ));
     }
     match get_tile_from_cache(z, x, y, query.mk, tk.to_string()).await {
-        Ok(body) => {
-            if is_webp(&body) {
-                //当你对 Vec<u8> 取引用时，你得到的是一个 &[u8]
-                let png_data = webp_to_png(body).unwrap();
-                Ok((ContentType::PNG, png_data))
-            } else {
-                Ok((ContentType::PNG, body))
-            }
-        }
+        Ok(body) => Ok((ContentType::PNG, body)),
         Err(e) => Err(status::Custom(
             Status::InternalServerError,
             format!("Error is: {}", e),
