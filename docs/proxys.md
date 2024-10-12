@@ -61,5 +61,5 @@ http://127.0.0.1/getTile/{z}/{x}/{y}?mk=<地图mk>
 <GetAddress path="/WMTS/XYZ"/>
 
 ::: info
-🤔 适合在 Acrmap 中使用
+🤔 适合在 Arcmap 中使用
 :::
