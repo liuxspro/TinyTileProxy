@@ -16,8 +16,8 @@
     </ows:ServiceIdentification>
     <Contents>
         <Layer>
-            <ows:Title>2023年全国0.5米吉林一号影像</ows:Title>
-            <ows:Abstract>2023年全国0.5米吉林一号影像</ows:Abstract>
+            <ows:Title>2023年度全国高质量一张图</ows:Title>
+            <ows:Abstract>2023年度全国高质量一张图</ows:Abstract>
             <ows:WGS84BoundingBox>
                 <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
                 <ows:UpperCorner>180.0 90</ows:UpperCorner>

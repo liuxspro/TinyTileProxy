@@ -33,7 +33,8 @@ import GetAddress from "./GetAddress.vue"
 ## 吉林一号
 
 ::: danger ⚠️ 注意
-‼️ 请先在`config.toml`中填写自己的 token
+‼️ 请先在`config.toml`中填写自己的 token  
+访问 [吉林 1 号官网](https://www.jl1mall.com/rskit/MyRSservice) 获取 TK
 :::
 
 可通过 WMTS 链接加载
@@ -43,10 +44,10 @@ import GetAddress from "./GetAddress.vue"
 或 XYZ 链接加载
 
 ```text
-http://127.0.0.1/getTile/{z}/{x}/{y}?mk=<地图mk>
+http://127.0.0.1/getTile/{z}/{x}/{y}?mk=73ad26c4aa6957eef051ecc5a15308b4
 ```
 
-> 2023 年全国 0.5 米吉林一号影像 mk: `73ad26c4aa6957eef051ecc5a15308b4`
+> 2023 年度全国高质量一张图 mk: `73ad26c4aa6957eef051ecc5a15308b4`
 
 ## 常用 XYZ 服务转 WMTS
 
