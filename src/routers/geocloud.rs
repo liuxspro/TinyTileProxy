@@ -4,8 +4,8 @@ use rocket::State;
 use rocket::{http::Status, response::status};
 use std::collections::HashMap;
 
-use crate::libs::geocloud::get_geocloud_tile;
-use crate::libs::utils::{ServerConfig, ZXY};
+use crate::libs::geocloud::get_geocloud_tile_cache;
+use crate::libs::utils::{is_png, ServerConfig, ZXY};
 
 #[derive(FromForm)]
 pub(crate) struct GeoCloudQuery {
@@ -26,7 +26,7 @@ pub async fn get_geocloud(
         x,
         y,
     };
-    match get_geocloud_tile(
+    match get_geocloud_tile_cache(
         zxy,
         query.layer,
         config.tokens.geocloud.clone(),
@@ -35,15 +35,13 @@ pub async fn get_geocloud(
     .await
     {
         Ok(body) => {
-            // token 过期时提示 b"token\xe5\xb7\xb2\xe8\xbf\x87\xe6\x9c\x9f"（token已过期）
-            let token_ex: &[u8] = b"token\xe5\xb7\xb2\xe8\xbf\x87\xe6\x9c\x9f";
-            if &body[..token_ex.len()] == token_ex {
+            if is_png(&body) {
+                Ok((ContentType::PNG, body))
+            } else {
                 Err(status::Custom(
                     Status::NotFound,
-                    format!("{}", String::from_utf8_lossy(token_ex)),
+                    format!("{}", String::from_utf8_lossy(&body)),
                 ))
-            } else {
-                Ok((ContentType::PNG, body))
             }
         }
         Err(e) => Err(status::Custom(

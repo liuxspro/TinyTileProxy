@@ -1,7 +1,6 @@
-use crate::libs::utils::{is_webp, webp_to_png};
+use crate::libs::utils::{is_webp, read_file, webp_to_png};
 use std::fs::{create_dir_all, File};
 use std::io::Write;
-use std::path::Path;
 
 type GetTileResult<T> = Result<T, reqwest::Error>;
 
@@ -35,10 +34,6 @@ pub async fn get_jl_tile(z: u32, x: u32, y: u32, mk: String, tk: String) -> GetT
     let response = client.get(url).send().await?;
     let body = response.bytes().await?;
     Ok(body.to_vec())
-}
-
-fn read_file(file_path: &Path) -> Result<Vec<u8>, std::io::Error> {
-    std::fs::read(file_path)
 }
 
 pub async fn get_tile_from_cache(

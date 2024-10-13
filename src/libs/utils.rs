@@ -69,6 +69,16 @@ jl1 = ""
     Ok(())
 }
 
+pub fn is_png(data: &[u8]) -> bool {
+    let png_magic_number: [u8; 8] = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
+    // 检查数据长度是否至少为 8 字节
+    if data.len() < 8 {
+        return false;
+    }
+    // 比较前 8 个字节与 PNG 魔数
+    &data[..8] == png_magic_number
+}
+
 pub fn is_webp(data: &[u8]) -> bool {
     if data.len() < 12 {
         return false;
@@ -131,4 +141,8 @@ pub fn create_cache_dir() {
         std::fs::create_dir(&cache_dir).expect("无法创建 Cache 文件夹");
         // println!("Cache 文件夹已创建");
     }
+}
+
+pub fn read_file(file_path: &Path) -> Result<Vec<u8>, std::io::Error> {
+    std::fs::read(file_path)
 }
