@@ -17,8 +17,8 @@
             <ows:Title>1 全国1/250万地质图</ows:Title>
             <ows:Abstract>地质云 - 基础地质/全国1/250万地质图</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
+                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>qg250w_20210416_ZAZSeOGX</ows:Identifier>
             <Style>
@@ -34,8 +34,8 @@
             <ows:Title>2 全国1/150万地质图</ows:Title>
             <ows:Abstract>地质云 - 基础地质/全国1/150万地质图</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
+                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>qg150w_20210416_BIwqE0wU</ows:Identifier>
             <Style>
@@ -51,8 +51,8 @@
             <ows:Title>3 全国1/100万地质图</ows:Title>
             <ows:Abstract>地质云 - 基础地质/全国1/100万地质图</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
+                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>全国100万地质图_20210330_rpam5kdJ</ows:Identifier>
             <Style>
@@ -68,8 +68,8 @@
             <ows:Title>4 全国1/50万地质图</ows:Title>
             <ows:Abstract>地质云 - 基础地质/全国1/50万地质图</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
+                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>qg50w_20210416_F7qGy9A7</ows:Identifier>
             <Style>
@@ -85,8 +85,8 @@
             <ows:Title>5 中国地下水资源图</ows:Title>
             <ows:Abstract>地质云 - 水文地质/中国地下水资源图</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
+                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF</ows:Identifier>
             <Style>
@@ -102,8 +102,8 @@
             <ows:Title>6 中国水文地质图</ows:Title>
             <ows:Abstract>地质云 - 水文地质/中国水文地质图</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
+                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>gisdatamanageCZL:zgswdzt16175436_20220905_BbcQipWD</ows:Identifier>
             <Style>
