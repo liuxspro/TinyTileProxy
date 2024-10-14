@@ -1,10 +1,21 @@
-use crate::libs::utils::{read_file, ZXY};
+use crate::libs::utils::{get_map_names, read_file, ZXY};
 use reqwest::Error;
 use std::collections::HashMap;
 use std::fs::{create_dir_all, File};
 use std::io::Write;
 
 use super::utils::is_png;
+
+fn get_z_value(zxy: &ZXY) -> String {
+    let z = &zxy.z;
+    if z.as_str().len() <= 2 {
+        z.to_string()
+    } else {
+        let z_slice: &str = &z;
+        let parts: Vec<&str> = z_slice.split(':').collect();
+        parts.last().unwrap().to_string()
+    }
+}
 
 fn create_parms(
     zxy: ZXY,
@@ -13,7 +24,6 @@ fn create_parms(
     tilematrixset: Option<String>,
 ) -> HashMap<&'static str, String> {
     let mut params = HashMap::new();
-
     params.insert("tk", tk);
     params.insert("Width", "256".to_string());
     params.insert("Height", "256".to_string());
@@ -66,9 +76,13 @@ pub async fn get_geocloud_tile_cache(
     tk: String,
     tilematrixset: Option<String>,
 ) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    let map_names = get_map_names();
     let cache_dir = std::env::current_dir()?.join("Cache");
-    let map_dir = cache_dir.join(format!("Geocloud/{}", layer));
-    let tile_dir = map_dir.join(format!("{}/{}/", zxy.z, zxy.x));
+    let map_dir = cache_dir.join(format!(
+        "Geocloud/{}",
+        map_names.get(layer.as_str()).unwrap_or(&layer.as_str())
+    ));
+    let tile_dir = map_dir.join(format!("{}/{}/", get_z_value(&zxy), zxy.x));
     let tile_path = tile_dir.join(format!("{}.png", zxy.y));
     if tile_path.exists() {
         let png_data = read_file(&tile_path)?;

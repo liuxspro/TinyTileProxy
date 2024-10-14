@@ -1,4 +1,4 @@
-use crate::libs::utils::{is_webp, read_file, webp_to_png};
+use crate::libs::utils::{get_map_names, is_webp, read_file, webp_to_png};
 use std::fs::{create_dir_all, File};
 use std::io::Write;
 
@@ -43,8 +43,12 @@ pub async fn get_tile_from_cache(
     mk: String,
     tk: String,
 ) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    let map_names = get_map_names();
     let cache_dir = std::env::current_dir()?.join("Cache");
-    let map_dir = cache_dir.join(format!("吉林1号/{}", mk));
+    let map_dir = cache_dir.join(format!(
+        "吉林1号/{}",
+        map_names.get(mk.as_str()).unwrap_or(&mk.as_str())
+    ));
     let tile_dir = map_dir.join(format!("{}/{}/", z, x));
     let tile_path = tile_dir.join(format!("{}.png", y));
     if tile_path.exists() {
