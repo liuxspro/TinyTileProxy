@@ -7,11 +7,13 @@ hero:
   # text: "A VitePress Site"
   tagline: A Simple Tile Porxy Server
   image:
-    src: /logo.png
+    light: /logo_light.webp
+    dark: /logo_dark.webp
+    # src: /logo.png
     alt: VitePress
   actions:
     - theme: brand
-      text: Get Start
+      text: 开始使用
       link: /proxys
     # - theme: alt
     #   text: API Examples

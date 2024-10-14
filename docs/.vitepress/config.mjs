@@ -24,4 +24,5 @@ export default defineConfig({
     ],
   },
   ignoreDeadLinks: true,
+  head: [["link", { rel: "icon", href: "/docs/favicon.ico" }]],
 });
