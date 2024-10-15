@@ -4,23 +4,18 @@ layout: home
 
 hero:
   name: "Tiny Tile Proxy"
-  # text: "A VitePress Site"
   tagline: A Simple Tile Porxy Server
   image:
     light: /logo_light.webp
     dark: /logo_dark.webp
-    # src: /logo.png
-    alt: VitePress
+    alt: Logo
   actions:
     - theme: brand
       text: 开始使用
       link: /proxys
-    # - theme: alt
-    #   text: API Examples
-    #   link: /api-examples
 
 features:
-  - title: 📄 WMTS 服务
+  - title: 📄 WMTS Proxy 服务
     details: 代理一些常用但是 QGIS 不能正常加载的 WMTS 服务
   - title: 📦 XYZ/TMS to WMTS
     details: 也许对 Arcmap 有用?🤔
