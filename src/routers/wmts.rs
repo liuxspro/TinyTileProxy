@@ -1,7 +1,8 @@
+use minijinja::{context, Environment};
 use rocket::response::content::RawXml;
 use rocket::State;
 use rust_embed::Embed;
-use tera::Tera;
+// use tera::Tera;
 
 use crate::libs::utils::ServerConfig;
 
@@ -17,13 +18,10 @@ pub fn get_geocloud_wmts(config: &State<ServerConfig>) -> RawXml<String> {
 
     let wmts_xml = Asset::get("templates/geocloud.xml").unwrap();
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
-    let mut tera = Tera::default();
-    tera.add_raw_template("geocloud.xml", &file_content)
-        .expect("Filed to add template");
-    // 构建模板上下文
-    let mut context = tera::Context::new();
-    context.insert("base_url", &address);
-    let rendered = tera.render("geocloud.xml", &context).unwrap();
+    let mut env = Environment::new();
+    env.add_template("geocloud.xml", &file_content).unwrap();
+    let template = env.get_template("geocloud.xml").unwrap();
+    let rendered = template.render(context! {base_url=> &address}).unwrap();
     RawXml(rendered)
 }
 
@@ -35,13 +33,10 @@ pub fn get_jl1_wmts(config: &State<ServerConfig>) -> RawXml<String> {
 
     let wmts_xml = Asset::get("templates/jl1.xml").unwrap();
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
-    let mut tera = Tera::default();
-    tera.add_raw_template("jl1.xml", &file_content)
-        .expect("Filed to add template");
-    // 构建模板上下文
-    let mut context = tera::Context::new();
-    context.insert("base_url", &address);
-    let rendered = tera.render("jl1.xml", &context).unwrap();
+    let mut env = Environment::new();
+    env.add_template("jl1.xml", &file_content).unwrap();
+    let template = env.get_template("jl1.xml").unwrap();
+    let rendered = template.render(context! {base_url=> &address}).unwrap();
     RawXml(rendered)
 }
 

@@ -3,7 +3,9 @@
     xmlns:ows="http://www.opengis.net/ows/1.1"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd" version="1.0.0">
+    xmlns:gml="http://www.opengis.net/gml"
+    xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd"
+    version="1.0.0">
     <ows:ServiceIdentification>
         <ows:Title>Tiny Map Proxy</ows:Title>
         <ows:Abstract>Tiny Map Proxy: 地质云</ows:Abstract>
@@ -28,7 +30,8 @@
             <TileMatrixSetLink>
                 <TileMatrixSet>default028mm</TileMatrixSet>
             </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile" template="{{ base_url }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg250w_20210416_ZAZSeOGX" />
+            <ResourceURL format="image/png" resourceType="tile"
+                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg250w_20210416_ZAZSeOGX" />
         </Layer>
         <Layer>
             <ows:Title>2 全国1/150万地质图</ows:Title>
@@ -45,7 +48,8 @@
             <TileMatrixSetLink>
                 <TileMatrixSet>default028mm</TileMatrixSet>
             </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile" template="{{ base_url }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg150w_20210416_BIwqE0wU" />
+            <ResourceURL format="image/png" resourceType="tile"
+                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg150w_20210416_BIwqE0wU" />
         </Layer>
         <Layer>
             <ows:Title>3 全国1/100万地质图</ows:Title>
@@ -62,7 +66,8 @@
             <TileMatrixSetLink>
                 <TileMatrixSet>default028mm</TileMatrixSet>
             </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile" template="{{ base_url }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=%E5%85%A8%E5%9B%BD100%E4%B8%87%E5%9C%B0%E8%B4%A8%E5%9B%BE_20210330_rpam5kdJ" />
+            <ResourceURL format="image/png" resourceType="tile"
+                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=%E5%85%A8%E5%9B%BD100%E4%B8%87%E5%9C%B0%E8%B4%A8%E5%9B%BE_20210330_rpam5kdJ" />
         </Layer>
         <Layer>
             <ows:Title>4 全国1/50万地质图</ows:Title>
@@ -79,7 +84,8 @@
             <TileMatrixSetLink>
                 <TileMatrixSet>default028mm</TileMatrixSet>
             </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile" template="{{ base_url }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg50w_20210416_F7qGy9A7" />
+            <ResourceURL format="image/png" resourceType="tile"
+                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg50w_20210416_F7qGy9A7" />
         </Layer>
         <Layer>
             <ows:Title>5 中国地下水资源图</ows:Title>
@@ -96,7 +102,8 @@
             <TileMatrixSetLink>
                 <TileMatrixSet>default028mmWithEPSG</TileMatrixSet>
             </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile" template="{{ base_url }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF&amp;tilematrixset=EPSG:4326" />
+            <ResourceURL format="image/png" resourceType="tile"
+                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF&amp;tilematrixset=EPSG:4326" />
         </Layer>
         <Layer>
             <ows:Title>6 中国水文地质图</ows:Title>
@@ -113,7 +120,8 @@
             <TileMatrixSetLink>
                 <TileMatrixSet>default028mmWithEPSG</TileMatrixSet>
             </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile" template="{{ base_url }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=gisdatamanageCZL:zgswdzt16175436_20220905_BbcQipWD&amp;tilematrixset=EPSG:4326" />
+            <ResourceURL format="image/png" resourceType="tile"
+                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=gisdatamanageCZL:zgswdzt16175436_20220905_BbcQipWD&amp;tilematrixset=EPSG:4326" />
         </Layer>
 
         <!-- 瓦片矩阵集 -->

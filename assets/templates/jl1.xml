@@ -31,7 +31,7 @@
                 <TileMatrixSet>GLOBAL_WEBMERCATOR</TileMatrixSet>
             </TileMatrixSetLink>
             <ResourceURL format="image/png" resourceType="tile"
-                template="{{ base_url }}/getTile/jl1/{TileMatrix}/{TileCol}/{TileRow}?mk=73ad26c4aa6957eef051ecc5a15308b4" />
+                template="{{ base_url | safe }}/getTile/jl1/{TileMatrix}/{TileCol}/{TileRow}?mk=73ad26c4aa6957eef051ecc5a15308b4" />
         </Layer>
         <TileMatrixSet>
             <ows:Title>Google Maps Compatible for the World</ows:Title>
