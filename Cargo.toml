@@ -1,6 +1,6 @@
 [package]
 name = "tiny-tile-proxy"
-version = "0.0.1"
+version = "0.1.0"
 edition = "2021"
 
 [[bin]]
@@ -8,3 +8,19 @@ name = "TinyTileProxy"
 path = "src/main.rs"
 
 [dependencies]
+figment = { version = "0.10", features = ["toml"] }
+reqwest = { version = "0.12", features = ["gzip"] }
+serde = { version = "1.0", features = ["derive"] }
+rocket = "0.5.1"
+rust-embed = "8.5.0"
+image = "0.25.2"
+tokio = { version = "1", features = ["full"] }
+minijinja = "2.3.1"
+
+# https://doc.rust-lang.org/cargo/reference/profiles.html
+[profile.release]
+codegen-units = 1 # 控制代码生成的单元数量
+lto = true        # 启用链接时优化, 减少生成的二进制文件的大小并提高性能
+opt-level = "s"   # 设置优化级别
+panic = "unwind"  # 控制 panic 时的行为 unwind: 在 panic 时展开堆栈
+strip = true      # 控制是否剥离生成的二进制文件中的符号信息
