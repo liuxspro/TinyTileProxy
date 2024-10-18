@@ -11,7 +11,7 @@ fn get_z_value(zxy: &ZXY) -> String {
     if z.as_str().len() <= 2 {
         z.to_string()
     } else {
-        let z_slice: &str = &z;
+        let z_slice: &str = z;
         let parts: Vec<&str> = z_slice.split(':').collect();
         parts.last().unwrap().to_string()
     }
@@ -30,11 +30,8 @@ fn create_parms(
     params.insert("layer", layer);
     // params.insert("style", "default".to_string());
     // tilematrixset EPSG%:4326_{layer}_028mm_GB / EPSG:4326
-    match tilematrixset {
-        Some(tms) => {
-            params.insert("tilematrixset", tms);
-        }
-        None => {}
+    if let Some(tms) = tilematrixset {
+        params.insert("tilematrixset", tms);
     }
 
     params.insert("Service", "WMTS".to_string());
@@ -45,7 +42,7 @@ fn create_parms(
     params.insert("TileCol", zxy.x.to_string());
     params.insert("TileRow", zxy.y.to_string());
 
-    return params;
+    params
 }
 
 pub async fn get_geocloud_tile(

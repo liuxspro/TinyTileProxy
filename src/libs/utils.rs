@@ -116,7 +116,7 @@ pub fn webp_to_png(webp_data: Vec<u8>) -> Result<Vec<u8>, Box<dyn std::error::Er
 pub fn get_local_ip() -> Option<IpAddr> {
     let ali_dns = "223.5.5.5:53";
     if let Ok(stream) = TcpStream::connect(ali_dns) {
-        if let Some(local_addr) = stream.local_addr().ok() {
+        if let Ok(local_addr) = stream.local_addr() {
             return Some(local_addr.ip());
         }
     }

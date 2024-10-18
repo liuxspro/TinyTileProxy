@@ -19,11 +19,11 @@ pub async fn get_jl1(
     config: &State<ServerConfig>,
 ) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
     let tk = &config.tokens.jl1;
-    if tk == "" {
+    if tk.is_empty() {
         // eprintln!("Error: jilin1 tk not set");
         return Err(status::Custom(
             Status::InternalServerError,
-            format!("Error: jilin1 tk not set"),
+            "Error: jilin1 tk not set".to_string(),
         ));
     }
     match get_tile_from_cache(z, x, y, query.mk, tk.to_string()).await {
