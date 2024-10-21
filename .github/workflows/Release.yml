@@ -2,7 +2,6 @@ name: 🎉 Release
 
 on:
   push:
-    branches: ["main"]
     tags:
       - "v*"
 
@@ -40,4 +39,4 @@ jobs:
       - name: Create Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} ./*.zip -t "Release ${{ github.ref_name }}" --generate-notes -d
+        run: gh release create ${{ github.ref_name }} ./TinyTileProxy-v${{ github.ref_name }}-x86_64-pc-windows-msvc.zip -t "Release ${{ github.ref_name }}" --generate-notes -d
