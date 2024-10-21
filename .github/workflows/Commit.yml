@@ -47,7 +47,9 @@ jobs:
 
       - name: Orgnize file (Windows)
         if: runner.os == 'Windows'
-        run: Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip"
+        run: |
+          $git_ref_name="$(git describe --always)"
+          Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-$git_ref_name-x86_64-pc-windows-msvc.zip"
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
