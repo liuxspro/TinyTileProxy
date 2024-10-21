@@ -1,0 +1,56 @@
+name: 🤖 Commit
+
+on:
+  push:
+    branches: ["dev"]
+  pull_request:
+    branches: ["dev"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  commit:
+    name: Commit Build
+    permissions: write-all
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build
+        run: pnpm build
+
+      - name: Orgnize file (Windows)
+        if: runner.os == 'Windows'
+        run: Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip"
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TinyTileProxy-${{ github.ref_name }}
+          path: TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip
