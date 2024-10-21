@@ -34,8 +34,9 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Orgnize file
-        run: 7z a TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip ./target/release/*.exe
+      - name: Orgnize file (Windows)
+        if: runner.os == 'Windows'
+        run: Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip"
 
       - name: Create Release
         env:
