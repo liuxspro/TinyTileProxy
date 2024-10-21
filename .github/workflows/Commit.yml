@@ -49,10 +49,10 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           echo $env:git_ref_name = "$(git describe --always)"
-          Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-$env:git_ref_name-x86_64-pc-windows-msvc.zip"
+          Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-${{ $env:git_ref_name }}-x86_64-pc-windows-msvc.zip"
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TinyTileProxy-${{ github.ref_name }}-$env:git_ref_name
-          path: TinyTileProxy-${{ github.ref_name }}-$env:git_ref_name-x86_64-pc-windows-msvc.zip
+          name: TinyTileProxy-${{ github.ref_name }}-${{ $env:git_ref_name }}
+          path: TinyTileProxy-${{ github.ref_name }}-${{ $env:git_ref_name }}-x86_64-pc-windows-msvc.zip
