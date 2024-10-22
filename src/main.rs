@@ -3,6 +3,7 @@ extern crate rocket;
 
 use figment::Figment;
 use rocket::Config;
+// use std::io::{self, Write};
 
 mod libs;
 mod routers;
@@ -45,8 +46,17 @@ fn rocket() -> _ {
 
     // 获取 tk 值
     let tk = get_tk_from_local_config().unwrap();
+
+    // 检查tk值是否为空
+    if tk.jl1.is_empty() {
+        eprintln!("吉林一号 tk 值未设置,请在 config.toml 中输入 tk 后重新运行...\n");
+        // io::stdout().flush().unwrap();
+        // let _ = io::stdin().read_line(&mut String::new());
+        // std::process::exit(0);
+    }
+
     // println!("Server will be running at http://{}:{}\n", address, port);
-    println!("使用浏览器访问: http://{}:{} 查看使用方法\n", address, port);
+    println!("访问: http://{}:{} 查看使用方法\n", address, port);
 
     let mut routers = routes![index, get_geocloud, get_jl1, docs, static_file, favicon];
     routers.extend(wmts::routers());
