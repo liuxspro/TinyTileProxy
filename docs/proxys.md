@@ -44,7 +44,7 @@ import GetAddress from "./GetAddress.vue"
 或 XYZ 链接加载
 
 ```text
-http://127.0.0.1/getTile/{z}/{x}/{y}?mk=73ad26c4aa6957eef051ecc5a15308b4
+http://127.0.0.1:8000/getTile/jl1/{z}/{x}/{y}?mk=73ad26c4aa6957eef051ecc5a15308b4
 ```
 
 > 2023 年度全国高质量一张图 mk: `73ad26c4aa6957eef051ecc5a15308b4`
