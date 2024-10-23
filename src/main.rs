@@ -2,14 +2,13 @@
 extern crate rocket;
 
 use figment::{providers::Env, Figment};
-use rocket::Config;
 
 mod libs;
 mod routers;
 
 use libs::utils::{
-    create_cache_dir, create_default_config_file, get_local_config_data, get_local_ip,
-    get_tk_from_local_config, is_unspecified, ServerConfig,
+    create_cache_dir, create_default_config_file, get_local_config_data, get_tk_from_local_config,
+    ServerConfig,
 };
 use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
@@ -29,35 +28,13 @@ fn rocket() -> _ {
         .merge(local_config.nested())
         .merge(Env::prefixed("ROCKET_").global());
 
-    let config: Config = figment.extract().expect("Failed to extract config");
-
-    // 获取 IP 及端口
-    let mut address = config.address;
-    let port = config.port;
-    if is_unspecified(address) {
-        match get_local_ip() {
-            Some(ip) => {
-                address = ip; // 这里获取到的ip可能不太准确,尝试使用 local-ip-address
-            }
-            None => {
-                eprintln!("Filed to get ip");
-            }
-        }
-    }
-
     // 获取 tk 值
     let tk = get_tk_from_local_config().unwrap();
 
     // 检查tk值是否为空
     if tk.jl1.is_empty() {
         eprintln!("吉林一号 tk 值未设置,请在 config.toml 中输入 tk 后重新运行...\n");
-        // io::stdout().flush().unwrap();
-        // let _ = io::stdin().read_line(&mut String::new());
-        // std::process::exit(0);
     }
-
-    // println!("Server will be running at http://{}:{}\n", address, port);
-    println!("访问: http://{}:{} 查看使用方法\n", address, port);
 
     let mut routers = routes![
         index,
@@ -71,10 +48,6 @@ fn rocket() -> _ {
     routers.extend(wmts::routers());
 
     rocket::custom(figment)
-        .manage(ServerConfig {
-            ip: address.to_string(),
-            port,
-            tokens: tk,
-        })
+        .manage(ServerConfig { tokens: tk })
         .mount("/", routers)
 }

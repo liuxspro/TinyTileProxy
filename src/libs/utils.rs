@@ -5,10 +5,10 @@ use figment::{
 use image::ImageFormat;
 use serde::Deserialize;
 use std::io::{self, Write};
-use std::net::{IpAddr, TcpStream};
+
+use std::fs::File;
 use std::path::Path;
 use std::{collections::HashMap, io::Cursor};
-use std::{fs::File, net::Ipv4Addr};
 
 #[derive(Deserialize)]
 pub struct Tokens {
@@ -23,8 +23,8 @@ pub struct ZXY {
 }
 
 pub struct ServerConfig {
-    pub ip: String,
-    pub port: u16,
+    // pub ip: String,
+    // pub port: u16,
     pub tokens: Tokens,
 }
 
@@ -111,23 +111,6 @@ pub fn webp_to_png(webp_data: Vec<u8>) -> Result<Vec<u8>, Box<dyn std::error::Er
     img.write_to(&mut Cursor::new(&mut png_data), ImageFormat::Png)?;
 
     Ok(png_data)
-}
-
-pub fn get_local_ip() -> Option<IpAddr> {
-    let ali_dns = "223.5.5.5:53";
-    if let Ok(stream) = TcpStream::connect(ali_dns) {
-        if let Ok(local_addr) = stream.local_addr() {
-            return Some(local_addr.ip());
-        }
-    }
-    None
-}
-
-pub fn is_unspecified(ip: IpAddr) -> bool {
-    match ip {
-        IpAddr::V4(ipv4) => ipv4 == Ipv4Addr::UNSPECIFIED,
-        IpAddr::V6(_) => false,
-    }
 }
 
 pub fn create_cache_dir() {

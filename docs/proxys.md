@@ -9,6 +9,23 @@ import GetAddress from "./GetAddress.vue"
 
 # Proxys
 
+## 吉林一号
+
+::: danger ⚠️ 注意
+‼️ 请先在`config.toml`中填写自己的 token  
+访问 [吉林 1 号官网](https://www.jl1mall.com/rskit/MyRSservice) 获取 TK
+:::
+
+可通过 WMTS 链接加载
+
+<GetAddress path="/WMTS/jl1"/>
+
+或 XYZ 链接加载
+
+<GetAddress path="/getTile/jl1/{z}/{x}/{y}?mk=73ad26c4aa6957eef051ecc5a15308b4"/>
+
+> 2023 年度全国高质量一张图 mk: `73ad26c4aa6957eef051ecc5a15308b4`
+
 ## 地质云
 
 可通过 WMTS 链接加载
@@ -29,25 +46,6 @@ import GetAddress from "./GetAddress.vue"
 公共 token 有时效性, 每几天需要更换新 token  
 请在`config.toml`中填写 token
 :::
-
-## 吉林一号
-
-::: danger ⚠️ 注意
-‼️ 请先在`config.toml`中填写自己的 token  
-访问 [吉林 1 号官网](https://www.jl1mall.com/rskit/MyRSservice) 获取 TK
-:::
-
-可通过 WMTS 链接加载
-
-<GetAddress path="/WMTS/jl1"/>
-
-或 XYZ 链接加载
-
-```text
-http://127.0.0.1:8000/getTile/jl1/{z}/{x}/{y}?mk=73ad26c4aa6957eef051ecc5a15308b4
-```
-
-> 2023 年度全国高质量一张图 mk: `73ad26c4aa6957eef051ecc5a15308b4`
 
 ## 常用 XYZ 服务转 WMTS
 
