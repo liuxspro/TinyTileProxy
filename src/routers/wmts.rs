@@ -2,7 +2,6 @@ use minijinja::{context, Environment};
 use rocket::response::content::RawXml;
 use rocket::State;
 use rust_embed::Embed;
-// use tera::Tera;
 
 use crate::libs::utils::ServerConfig;
 

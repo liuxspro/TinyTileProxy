@@ -1,9 +1,8 @@
 #[macro_use]
 extern crate rocket;
 
-use figment::Figment;
+use figment::{providers::Env, Figment};
 use rocket::Config;
-// use std::io::{self, Write};
 
 mod libs;
 mod routers;
@@ -26,7 +25,9 @@ fn rocket() -> _ {
     println!("Tiny Tile Proxy\t v{}\n", env!("CARGO_PKG_VERSION"));
 
     let local_config = get_local_config_data();
-    let figment = Figment::from(rocket::Config::default()).merge(local_config.nested());
+    let figment = Figment::from(rocket::Config::default())
+        .merge(local_config.nested())
+        .merge(Env::prefixed("ROCKET_").global());
 
     let config: Config = figment.extract().expect("Failed to extract config");
 
@@ -36,7 +37,7 @@ fn rocket() -> _ {
     if is_unspecified(address) {
         match get_local_ip() {
             Some(ip) => {
-                address = ip;
+                address = ip; // 这里获取到的ip可能不太准确,尝试使用 local-ip-address
             }
             None => {
                 eprintln!("Filed to get ip");
