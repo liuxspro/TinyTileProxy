@@ -13,7 +13,7 @@ use libs::utils::{
 };
 use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
-use routers::index::{favicon, index};
+use routers::index::{favicon, get_host, index};
 use routers::jilin1::get_jl1;
 use routers::wmts;
 
@@ -59,7 +59,15 @@ fn rocket() -> _ {
     // println!("Server will be running at http://{}:{}\n", address, port);
     println!("访问: http://{}:{} 查看使用方法\n", address, port);
 
-    let mut routers = routes![index, get_geocloud, get_jl1, docs, static_file, favicon];
+    let mut routers = routes![
+        index,
+        get_geocloud,
+        get_jl1,
+        docs,
+        static_file,
+        favicon,
+        get_host
+    ];
     routers.extend(wmts::routers());
 
     rocket::custom(figment)
