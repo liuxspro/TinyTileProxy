@@ -134,6 +134,7 @@ pub fn get_map_names() -> HashMap<&'static str, &'static str> {
     map_names.insert("qg150w_20210416_BIwqE0wU", "全国1比150万地质图");
     map_names.insert("全国100万地质图_20210330_rpam5kdJ", "全国1比100万地质图");
     map_names.insert("qg50w_20210416_F7qGy9A7", "全国1比50万地质图");
+    map_names.insert("qg20_20210401_FCnDDRJd", "全国1比20万地质图");
     map_names.insert(
         "gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF",
         "中国地下水资源图",
