@@ -1,20 +1,33 @@
 use minijinja::{context, Environment};
+use rocket::http::Status;
+use rocket::request::{self, FromRequest, Outcome, Request};
 use rocket::response::content::RawXml;
-use rocket::State;
-use rust_embed::Embed;
-// use tera::Tera;
 
-use crate::libs::utils::ServerConfig;
+use rust_embed::Embed;
 
 #[derive(Embed)]
 #[folder = "assets"]
 struct Asset;
 
+#[derive(Debug)]
+pub struct HostFromHeader(String);
+
+#[rocket::async_trait]
+impl<'r> FromRequest<'r> for HostFromHeader {
+    type Error = ();
+
+    async fn from_request(request: &'r Request<'_>) -> request::Outcome<Self, Self::Error> {
+        if let Some(host) = request.headers().get_one("Host") {
+            Outcome::Success(HostFromHeader(host.to_string()))
+        } else {
+            Outcome::Error((Status::BadRequest, ()))
+        }
+    }
+}
+
 #[get("/WMTS/geocloud")]
-pub fn get_geocloud_wmts(config: &State<ServerConfig>) -> RawXml<String> {
-    let ip = &config.ip;
-    let port = &config.port;
-    let address = format!("http://{}:{}", ip, port);
+pub fn get_geocloud_wmts(host: HostFromHeader) -> RawXml<String> {
+    let address = format!("http://{}", host.0);
 
     let wmts_xml = Asset::get("templates/geocloud.xml").unwrap();
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
@@ -26,10 +39,8 @@ pub fn get_geocloud_wmts(config: &State<ServerConfig>) -> RawXml<String> {
 }
 
 #[get("/WMTS/jl1")]
-pub fn get_jl1_wmts(config: &State<ServerConfig>) -> RawXml<String> {
-    let ip = &config.ip;
-    let port = &config.port;
-    let address = format!("http://{}:{}", ip, port);
+pub fn get_jl1_wmts(host: HostFromHeader) -> RawXml<String> {
+    let address = format!("http://{}", host.0);
 
     let wmts_xml = Asset::get("templates/jl1.xml").unwrap();
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");

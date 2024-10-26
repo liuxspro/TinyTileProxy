@@ -30,10 +30,4 @@ mod tests {
             assert!(body.len() == 15301, "Body length should be 15301");
         }
     }
-
-    #[test]
-    fn test_ip() {
-        let ip = utils::get_local_ip().expect("Failed to get local IP address");
-        eprintln!("{}", ip)
-    }
 }

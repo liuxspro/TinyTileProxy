@@ -5,10 +5,10 @@ use figment::{
 use image::ImageFormat;
 use serde::Deserialize;
 use std::io::{self, Write};
-use std::net::{IpAddr, TcpStream};
+
+use std::fs::File;
 use std::path::Path;
 use std::{collections::HashMap, io::Cursor};
-use std::{fs::File, net::Ipv4Addr};
 
 #[derive(Deserialize)]
 pub struct Tokens {
@@ -23,8 +23,8 @@ pub struct ZXY {
 }
 
 pub struct ServerConfig {
-    pub ip: String,
-    pub port: u16,
+    // pub ip: String,
+    // pub port: u16,
     pub tokens: Tokens,
 }
 
@@ -113,23 +113,6 @@ pub fn webp_to_png(webp_data: Vec<u8>) -> Result<Vec<u8>, Box<dyn std::error::Er
     Ok(png_data)
 }
 
-pub fn get_local_ip() -> Option<IpAddr> {
-    let ali_dns = "223.5.5.5:53";
-    if let Ok(stream) = TcpStream::connect(ali_dns) {
-        if let Ok(local_addr) = stream.local_addr() {
-            return Some(local_addr.ip());
-        }
-    }
-    None
-}
-
-pub fn is_unspecified(ip: IpAddr) -> bool {
-    match ip {
-        IpAddr::V4(ipv4) => ipv4 == Ipv4Addr::UNSPECIFIED,
-        IpAddr::V6(_) => false,
-    }
-}
-
 pub fn create_cache_dir() {
     // 获取当前工作目录
     let current_dir = std::env::current_dir().expect("无法获取当前目录");
@@ -151,6 +134,7 @@ pub fn get_map_names() -> HashMap<&'static str, &'static str> {
     map_names.insert("qg150w_20210416_BIwqE0wU", "全国1比150万地质图");
     map_names.insert("全国100万地质图_20210330_rpam5kdJ", "全国1比100万地质图");
     map_names.insert("qg50w_20210416_F7qGy9A7", "全国1比50万地质图");
+    map_names.insert("qg20_20210401_FCnDDRJd", "全国1比20万地质图");
     map_names.insert(
         "gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF",
         "中国地下水资源图",
