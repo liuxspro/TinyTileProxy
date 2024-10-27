@@ -27,7 +27,7 @@ ENV ROCKET_PORT=8000
 EXPOSE 8000
 
 # 创建挂载点
-VOLUME [/app]
+VOLUME /app
 
 # 运行应用程序
 CMD ["TinyTileProxy"]
