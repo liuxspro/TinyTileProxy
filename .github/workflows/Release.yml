@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -82,4 +82,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Images and push
-        run: docker build . --platform linux/amd64 -t liuxspro/ting-tile-proxy:latest -t liuxspro/ting-tile-proxy:${{ github.ref_name }} --push
+        run: docker build . --platform linux/amd64 -t liuxspro/tiny-tile-proxy:latest -t liuxspro/tiny-tile-proxy:${{ github.ref_name }} --push
