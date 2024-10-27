@@ -10,7 +10,7 @@ use rust_embed::Embed;
 struct Asset;
 
 #[derive(Debug)]
-pub struct HostFromHeader(String);
+pub struct HostFromHeader(String, String);
 
 #[rocket::async_trait]
 impl<'r> FromRequest<'r> for HostFromHeader {
@@ -18,7 +18,12 @@ impl<'r> FromRequest<'r> for HostFromHeader {
 
     async fn from_request(request: &'r Request<'_>) -> request::Outcome<Self, Self::Error> {
         if let Some(host) = request.headers().get_one("Host") {
-            Outcome::Success(HostFromHeader(host.to_string()))
+            // 尝试获取协议
+            let protocol = request
+                .headers()
+                .get_one("X-Forwarded-Proto")
+                .unwrap_or("http");
+            Outcome::Success(HostFromHeader(host.to_string(), protocol.to_string()))
         } else {
             Outcome::Error((Status::BadRequest, ()))
         }
@@ -27,7 +32,7 @@ impl<'r> FromRequest<'r> for HostFromHeader {
 
 #[get("/WMTS/geocloud")]
 pub fn get_geocloud_wmts(host: HostFromHeader) -> RawXml<String> {
-    let address = format!("http://{}", host.0);
+    let address = format!("{}://{}", host.1, host.0);
 
     let wmts_xml = Asset::get("templates/geocloud.xml").unwrap();
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
