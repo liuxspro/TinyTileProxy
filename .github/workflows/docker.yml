@@ -46,4 +46,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Images and push
-        run: docker build . --platform linux/amd64 -t liuxspro/ting-tile-proxy:dev --push
+        run: docker build . --platform linux/amd64 -t liuxspro/tiny-tile-proxy:dev --push
