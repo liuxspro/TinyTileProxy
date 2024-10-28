@@ -30,6 +30,10 @@ fn rocket() -> _ {
 
     // 获取 tk 值
     let tk = get_tk_from_local_config().unwrap();
+    let use_https_str: String = std::env::var("ROCKET_USE_HTTPS").unwrap_or("false".to_string());
+    let use_https = use_https_str
+        .parse::<bool>()
+        .expect("Failed to parse use_https as bool");
 
     // 检查tk值是否为空
     if tk.jl1.is_empty() {
@@ -40,6 +44,9 @@ fn rocket() -> _ {
     routers.extend(wmts::routers());
 
     rocket::custom(figment)
-        .manage(ServerConfig { tokens: tk })
+        .manage(ServerConfig {
+            tokens: tk,
+            use_https,
+        })
         .mount("/", routers)
 }

@@ -26,6 +26,7 @@ pub struct ServerConfig {
     // pub ip: String,
     // pub port: u16,
     pub tokens: Tokens,
+    pub use_https: bool,
 }
 
 pub fn get_tk_from_local_config() -> Result<Tokens, figment::Error> {

@@ -1,7 +1,9 @@
+use crate::libs::utils::ServerConfig;
 use minijinja::{context, Environment};
 use rocket::http::Status;
 use rocket::request::{self, FromRequest, Outcome, Request};
 use rocket::response::content::RawXml;
+use rocket::State;
 
 use rust_embed::Embed;
 
@@ -10,7 +12,7 @@ use rust_embed::Embed;
 struct Asset;
 
 #[derive(Debug)]
-pub struct HostFromHeader(String, String);
+pub struct HostFromHeader(String);
 
 #[rocket::async_trait]
 impl<'r> FromRequest<'r> for HostFromHeader {
@@ -19,11 +21,11 @@ impl<'r> FromRequest<'r> for HostFromHeader {
     async fn from_request(request: &'r Request<'_>) -> request::Outcome<Self, Self::Error> {
         if let Some(host) = request.headers().get_one("Host") {
             // 尝试获取协议
-            let protocol = request
-                .headers()
-                .get_one("X-Forwarded-Proto")
-                .unwrap_or("http");
-            Outcome::Success(HostFromHeader(host.to_string(), protocol.to_string()))
+            // let protocol = request
+            //     .headers()
+            //     .get_one("X-Forwarded-Proto")
+            //     .unwrap_or("http");
+            Outcome::Success(HostFromHeader(host.to_string()))
         } else {
             Outcome::Error((Status::BadRequest, ()))
         }
@@ -31,8 +33,9 @@ impl<'r> FromRequest<'r> for HostFromHeader {
 }
 
 #[get("/WMTS/geocloud")]
-pub fn get_geocloud_wmts(host: HostFromHeader) -> RawXml<String> {
-    let address = format!("{}://{}", host.1, host.0);
+pub fn get_geocloud_wmts(host: HostFromHeader, config: &State<ServerConfig>) -> RawXml<String> {
+    let proto = if config.use_https { "https" } else { "http" };
+    let address = format!("{}://{}", proto, host.0);
 
     let wmts_xml = Asset::get("templates/geocloud.xml").unwrap();
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
@@ -44,8 +47,9 @@ pub fn get_geocloud_wmts(host: HostFromHeader) -> RawXml<String> {
 }
 
 #[get("/WMTS/jl1")]
-pub fn get_jl1_wmts(host: HostFromHeader) -> RawXml<String> {
-    let address = format!("http://{}", host.0);
+pub fn get_jl1_wmts(host: HostFromHeader, config: &State<ServerConfig>) -> RawXml<String> {
+    let proto = if config.use_https { "https" } else { "http" };
+    let address = format!("{}://{}", proto, host.0);
 
     let wmts_xml = Asset::get("templates/jl1.xml").unwrap();
     let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
