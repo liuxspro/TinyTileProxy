@@ -14,6 +14,7 @@ use std::{collections::HashMap, io::Cursor};
 pub struct Tokens {
     pub geocloud: String,
     pub jl1: String,
+    pub jl1earth: String,
 }
 
 pub struct ZXY {
