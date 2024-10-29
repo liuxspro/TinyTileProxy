@@ -13,7 +13,7 @@ jobs:
   commit:
     name: Commit Build
     permissions: write-all
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -45,12 +45,12 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Orgnize file (Windows)
-        if: runner.os == 'Windows'
-        run: Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip"
+      # - name: Orgnize file (Windows)
+      #   if: runner.os == 'Windows'
+      #   run: Compress-Archive -Path "./target/release/*.exe" -DestinationPath "TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip"
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TinyTileProxy-${{ github.ref_name }}
-          path: TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip
+      # - name: Upload a Build Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: TinyTileProxy-${{ github.ref_name }}
+      #     path: TinyTileProxy-${{ github.ref_name }}-x86_64-pc-windows-msvc.zip
