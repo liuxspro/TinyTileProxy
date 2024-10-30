@@ -1,3 +1,4 @@
+use anyhow::{anyhow, Result as AnyhowResult};
 use figment::{
     providers::{Format, Toml},
     Figment,
@@ -160,4 +161,14 @@ pub fn get_map_names() -> HashMap<&'static str, &'static str> {
         "2023年度全国高质量一张图",
     );
     map_names
+}
+
+pub fn save_png(tile_path: PathBuf, buffer: &[u8]) -> AnyhowResult<bool> {
+    if is_png(&buffer) {
+        let mut tile_file = File::create(&tile_path)?;
+        tile_file.write_all(&buffer)?;
+        Ok(true)
+    } else {
+        Err(anyhow!("Filed to save: Not A PNG File"))
+    }
 }
