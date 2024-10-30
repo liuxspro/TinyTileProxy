@@ -2,7 +2,7 @@ use rocket::http::ContentType;
 use rocket::State;
 use rocket::{http::Status, response::status};
 
-use crate::libs::jilin1::get_tile_from_cache;
+use crate::libs::jilin1::{get_earthtile_from_cache, get_tile_from_cache};
 use crate::libs::utils::ServerConfig;
 
 #[derive(FromForm)]
@@ -20,7 +20,6 @@ pub async fn get_jl1(
 ) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
     let tk = &config.tokens.jl1;
     if tk.is_empty() {
-        // eprintln!("Error: jilin1 tk not set");
         return Err(status::Custom(
             Status::InternalServerError,
             "Error: jilin1 tk not set".to_string(),
@@ -31,6 +30,23 @@ pub async fn get_jl1(
         Err(e) => Err(status::Custom(
             Status::InternalServerError,
             format!("Error is: {}", e),
+        )),
+    }
+}
+
+#[get("/getTile/jl1earth/<z>/<x>/<y>")]
+pub async fn get_jl1earth(
+    z: u32,
+    x: u32,
+    y: u32,
+    config: &State<ServerConfig>,
+) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
+    let tk = &config.tokens.jl1earth;
+    match get_earthtile_from_cache(z, x, y, tk.to_string()).await {
+        Ok(body) => Ok((ContentType::PNG, body)),
+        Err(e) => Err(status::Custom(
+            Status::InternalServerError,
+            format!("Error: {}", e),
         )),
     }
 }

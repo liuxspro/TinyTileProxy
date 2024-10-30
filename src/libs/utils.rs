@@ -4,7 +4,10 @@ use figment::{
 };
 use image::ImageFormat;
 use serde::Deserialize;
-use std::io::{self, Write};
+use std::{
+    io::{self, Write},
+    path::PathBuf,
+};
 
 use std::fs::File;
 use std::path::Path;
@@ -14,6 +17,7 @@ use std::{collections::HashMap, io::Cursor};
 pub struct Tokens {
     pub geocloud: String,
     pub jl1: String,
+    pub jl1earth: String,
 }
 
 pub struct ZXY {
@@ -60,6 +64,7 @@ port = 8000
 [tokens]
 geocloud = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJnZW9jbG91ZCIsImV4cCI6MTcyNzg2MDE4Nn0.Nk9RV5m-5uVcMOzUAo7JtZaamrYDxxRf5-hKvQl3agg"
 jl1 = ""
+jl1earth=""
 "#;
 
     // 创建文件并写入内容
@@ -123,6 +128,12 @@ pub fn create_cache_dir() {
         std::fs::create_dir(&cache_dir).expect("无法创建 Cache 文件夹");
         // println!("Cache 文件夹已创建");
     }
+}
+
+pub fn get_cache_dir() -> PathBuf {
+    // 获取当前工作目录
+    let current_dir = std::env::current_dir().expect("无法获取当前目录");
+    current_dir.join("Cache")
 }
 
 pub fn read_file(file_path: &Path) -> Result<Vec<u8>, std::io::Error> {

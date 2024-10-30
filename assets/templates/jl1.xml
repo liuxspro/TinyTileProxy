@@ -33,6 +33,24 @@
             <ResourceURL format="image/png" resourceType="tile"
                 template="{{ base_url | safe }}/getTile/jl1/{TileMatrix}/{TileCol}/{TileRow}?mk=73ad26c4aa6957eef051ecc5a15308b4" />
         </Layer>
+        <Layer>
+            <ows:Title>2023年度全国高质量一张图 - 共生地球版</ows:Title>
+            <ows:Abstract>2023年度全国高质量一张图 - 共生地球版</ows:Abstract>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
+                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <ows:Identifier>jl1earth</ows:Identifier>
+            <Style>
+                <ows:Identifier>default</ows:Identifier>
+            </Style>
+            <Format>image/png</Format>
+            <TileMatrixSetLink>
+                <TileMatrixSet>GLOBAL_WEBMERCATOR</TileMatrixSet>
+            </TileMatrixSetLink>
+            <ResourceURL format="image/png" resourceType="tile"
+                template="{{ base_url | safe }}/getTile/jl1earth/{TileMatrix}/{TileCol}/{TileRow}" />
+        </Layer>
         <TileMatrixSet>
             <ows:Title>Google Maps Compatible for the World</ows:Title>
             <ows:Identifier>GLOBAL_WEBMERCATOR</ows:Identifier>

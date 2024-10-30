@@ -13,7 +13,7 @@ use libs::utils::{
 use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
 use routers::index::{favicon, index};
-use routers::jilin1::get_jl1;
+use routers::jilin1::{get_jl1, get_jl1earth};
 use routers::wmts;
 
 #[launch]
@@ -40,7 +40,15 @@ fn rocket() -> _ {
         eprintln!("吉林一号 tk 值未设置,请在 config.toml 中输入 tk 后重新运行...\n");
     }
 
-    let mut routers = routes![index, get_geocloud, get_jl1, docs, static_file, favicon,];
+    let mut routers = routes![
+        index,
+        get_geocloud,
+        get_jl1,
+        get_jl1earth,
+        docs,
+        static_file,
+        favicon,
+    ];
     routers.extend(wmts::routers());
 
     rocket::custom(figment)
