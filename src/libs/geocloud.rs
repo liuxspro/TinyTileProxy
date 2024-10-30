@@ -1,10 +1,9 @@
-use crate::libs::utils::{get_map_names, read_file, ZXY};
 use reqwest::Error;
 use std::collections::HashMap;
 use std::fs::{create_dir_all, File};
 use std::io::Write;
 
-use super::utils::is_png;
+use super::utils::{get_cache_dir, get_map_names, is_png, read_file, ZXY};
 
 fn get_z_value(zxy: &ZXY) -> String {
     let z = &zxy.z;
@@ -74,7 +73,7 @@ pub async fn get_geocloud_tile_cache(
     tilematrixset: Option<String>,
 ) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     let map_names = get_map_names();
-    let cache_dir = std::env::current_dir()?.join("Cache");
+    let cache_dir = get_cache_dir();
     let map_dir = cache_dir.join(format!(
         "Geocloud/{}",
         map_names.get(layer.as_str()).unwrap_or(&layer.as_str())
