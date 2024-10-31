@@ -1,9 +1,9 @@
+use anyhow::Result as AnyhowResult;
 use reqwest::Error;
 use std::collections::HashMap;
-use std::fs::{create_dir_all, File};
-use std::io::Write;
+use std::fs::create_dir_all;
 
-use super::utils::{get_cache_dir, get_map_names, is_png, read_file, ZXY};
+use super::utils::{get_cache_dir, get_map_names, read_file, save_png, ZXY};
 
 fn get_z_value(zxy: &ZXY) -> String {
     let z = &zxy.z;
@@ -71,7 +71,7 @@ pub async fn get_geocloud_tile_cache(
     layer: String,
     tk: String,
     tilematrixset: Option<String>,
-) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+) -> AnyhowResult<Vec<u8>> {
     let map_names = get_map_names();
     let cache_dir = get_cache_dir();
     let map_dir = cache_dir.join(format!(
@@ -87,10 +87,7 @@ pub async fn get_geocloud_tile_cache(
         create_dir_all(&tile_dir).expect("Filed to create Tile Dir");
         match get_geocloud_tile(zxy, layer, tk, tilematrixset).await {
             Ok(body) => {
-                if is_png(&body) {
-                    let mut tile_file = File::create(&tile_path)?;
-                    tile_file.write_all(&body)?;
-                }
+                save_png(tile_path, &body)?;
                 Ok(body)
             }
             Err(e) => Err(e.into()),

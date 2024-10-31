@@ -1,8 +1,7 @@
 use anyhow::{anyhow, Result as AnyhowResult};
-use std::fs::{create_dir_all, File};
-use std::io::Write;
+use std::fs::create_dir_all;
 
-use super::utils::{get_cache_dir, get_map_names, is_png, is_webp, read_file, webp_to_png};
+use super::utils::{get_cache_dir, get_map_names, is_webp, read_file, save_png, webp_to_png};
 
 /// 请求吉林1号瓦片
 ///
@@ -59,14 +58,13 @@ pub async fn get_tile_from_cache(
         match get_jl_tile(z, x, y, mk, tk).await {
             Ok(body) => {
                 // 缓存瓦片，将 webp 转为 png 保存
-                let mut tile_file = File::create(&tile_path)?;
                 // 存在一些瓦片实际上是 png 格式的(透明)，这里做一下检查
                 if is_webp(&body) {
                     let png_data = webp_to_png(body).unwrap();
-                    tile_file.write_all(&png_data)?;
+                    save_png(tile_path, &png_data)?;
                     Ok(png_data)
                 } else {
-                    tile_file.write_all(&body)?;
+                    save_png(tile_path, &body)?;
                     Ok(body)
                 }
             }
@@ -117,16 +115,13 @@ pub async fn get_earthtile_from_cache(z: u32, x: u32, y: u32, tk: String) -> Any
         match get_jlearth_tile(z, x, y, tk).await {
             Ok(body) => {
                 // 缓存瓦片，将 webp 转为 png 保存
-                let mut tile_file = File::create(&tile_path)?;
                 // 存在一些瓦片实际上是 png 格式的(透明)，这里做一下检查
                 if is_webp(&body) {
                     let png_data = webp_to_png(body).unwrap();
-                    tile_file.write_all(&png_data)?;
+                    save_png(tile_path, &png_data)?;
                     Ok(png_data)
                 } else {
-                    if is_png(&body) {
-                        tile_file.write_all(&body)?;
-                    }
+                    save_png(tile_path, &body)?;
                     Ok(body)
                 }
             }

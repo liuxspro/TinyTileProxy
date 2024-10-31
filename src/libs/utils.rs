@@ -1,3 +1,4 @@
+use anyhow::{anyhow, Result as AnyhowResult};
 use figment::{
     providers::{Format, Toml},
     Figment,
@@ -27,8 +28,6 @@ pub struct ZXY {
 }
 
 pub struct ServerConfig {
-    // pub ip: String,
-    // pub port: u16,
     pub tokens: Tokens,
     pub use_https: bool,
 }
@@ -62,7 +61,7 @@ address = "127.0.0.1"
 port = 8000
 
 [tokens]
-geocloud = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJnZW9jbG91ZCIsImV4cCI6MTcyNzg2MDE4Nn0.Nk9RV5m-5uVcMOzUAo7JtZaamrYDxxRf5-hKvQl3agg"
+geocloud = ""
 jl1 = ""
 jl1earth=""
 "#;
@@ -121,12 +120,10 @@ pub fn webp_to_png(webp_data: Vec<u8>) -> Result<Vec<u8>, Box<dyn std::error::Er
 
 pub fn create_cache_dir() {
     // 获取当前工作目录
-    let current_dir = std::env::current_dir().expect("无法获取当前目录");
-    let cache_dir = current_dir.join("Cache");
+    let cache_dir = get_cache_dir();
     if !cache_dir.exists() {
         // 创建 Cache 文件夹
         std::fs::create_dir(&cache_dir).expect("无法创建 Cache 文件夹");
-        // println!("Cache 文件夹已创建");
     }
 }
 
@@ -160,4 +157,14 @@ pub fn get_map_names() -> HashMap<&'static str, &'static str> {
         "2023年度全国高质量一张图",
     );
     map_names
+}
+
+pub fn save_png(tile_path: PathBuf, buffer: &[u8]) -> AnyhowResult<bool> {
+    if is_png(&buffer) {
+        let mut tile_file = File::create(&tile_path)?;
+        tile_file.write_all(&buffer)?;
+        Ok(true)
+    } else {
+        Err(anyhow!("Filed to save: Not A PNG File"))
+    }
 }
