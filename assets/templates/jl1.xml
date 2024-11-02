@@ -19,8 +19,8 @@
             <ows:Title>2023年度全国高质量一张图</ows:Title>
             <ows:Abstract>2023年度全国高质量一张图</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>-180.0 -85.051129</ows:LowerCorner>
+                <ows:UpperCorner>180.0 85.051129</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>jl1</ows:Identifier>
             <Style>
@@ -37,8 +37,8 @@
             <ows:Title>2023年度全国高质量一张图 - 共生地球版</ows:Title>
             <ows:Abstract>2023年度全国高质量一张图 - 共生地球版</ows:Abstract>
             <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-180.0 -90</ows:LowerCorner>
-                <ows:UpperCorner>180.0 90</ows:UpperCorner>
+                <ows:LowerCorner>-180.0 -85.051129</ows:LowerCorner>
+                <ows:UpperCorner>180.0 85.051129</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <ows:Identifier>jl1earth</ows:Identifier>
             <Style>
