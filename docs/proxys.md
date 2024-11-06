@@ -27,7 +27,7 @@ import GetAddress from "./GetAddress.vue"
 > 2023 年度全国高质量一张图 mk: `73ad26c4aa6957eef051ecc5a15308b4`
 
 > 视频教程:
-<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113406514301152&bvid=BV144SdYiECo&cid=26561089267&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="387px"></iframe>
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113406514301152&bvid=BV144SdYiECo&cid=26561089267&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="387px"></iframe>
 
 ## 地质云
 
@@ -52,7 +52,7 @@ import GetAddress from "./GetAddress.vue"
 :::
 
 > 视频演示:
-<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113163043409358&bvid=BV17jtWetEvB&cid=25919818527&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="387px"></iframe>
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113163043409358&bvid=BV17jtWetEvB&cid=25919818527&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height="387px"></iframe>
 
 ## 常用 XYZ 服务转 WMTS
 
