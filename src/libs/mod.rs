@@ -1,3 +1,4 @@
+pub mod config;
 pub mod geocloud;
 pub mod jilin1;
 pub mod utils;
@@ -10,7 +11,7 @@ mod tests {
 
     #[tokio::test]
     async fn get_geocloud_tile() {
-        let tk = utils::get_tk_from_local_config().unwrap();
+        let tk = config::get_tk_from_local_config().unwrap();
         let zxy = ZXY {
             z: "4".to_string(),
             x: 24,

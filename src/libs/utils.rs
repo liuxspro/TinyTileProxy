@@ -1,77 +1,16 @@
 use anyhow::{anyhow, Result as AnyhowResult};
-use figment::{
-    providers::{Format, Toml},
-    Figment,
-};
+
 use image::ImageFormat;
-use serde::Deserialize;
-use std::{
-    io::{self, Write},
-    path::PathBuf,
-};
+use std::{io::Write, path::PathBuf};
 
 use std::fs::File;
 use std::path::Path;
 use std::{collections::HashMap, io::Cursor};
 
-#[derive(Deserialize)]
-pub struct Tokens {
-    pub geocloud: String,
-    pub jl1: String,
-    pub jl1earth: String,
-}
-
 pub struct ZXY {
     pub z: String,
     pub x: u32,
     pub y: u32,
-}
-
-pub struct ServerConfig {
-    pub tokens: Tokens,
-    pub use_https: bool,
-}
-
-pub fn get_tk_from_local_config() -> Result<Tokens, figment::Error> {
-    let config: Tokens = Figment::new()
-        .merge(get_local_config_data().nested())
-        .select("tokens")
-        .extract()
-        .expect("Filed to get tokens");
-
-    Ok(config)
-}
-
-pub fn get_local_config_data() -> figment::providers::Data<Toml> {
-    Toml::file("config.toml")
-}
-
-pub fn create_default_config_file() -> io::Result<()> {
-    let config_path = "config.toml";
-
-    // 检查文件是否存在
-    if Path::new(config_path).exists() {
-        // println!("config.toml already exists.");
-        return Ok(());
-    }
-
-    // 定义要写入的内容
-    let config_content = r#"[default]
-address = "127.0.0.1"
-port = 8000
-
-[tokens]
-geocloud = ""
-jl1 = ""
-jl1earth=""
-"#;
-
-    // 创建文件并写入内容
-    let mut file = File::create(config_path)?;
-    file.write_all(config_content.as_bytes())?;
-
-    // println!("create default config.toml");
-    Ok(())
 }
 
 pub fn is_png(data: &[u8]) -> bool {
@@ -123,6 +62,7 @@ pub fn create_cache_dir() {
     let cache_dir = get_cache_dir();
     if !cache_dir.exists() {
         // 创建 Cache 文件夹
+        println!("Create Cache dir");
         std::fs::create_dir(&cache_dir).expect("无法创建 Cache 文件夹");
     }
 }

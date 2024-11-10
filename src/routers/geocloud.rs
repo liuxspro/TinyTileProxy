@@ -1,11 +1,11 @@
-// use reqwest::Error;
 use rocket::http::ContentType;
 use rocket::State;
 use rocket::{http::Status, response::status};
 use std::collections::HashMap;
 
+use crate::libs::config::StateConfig;
 use crate::libs::geocloud::get_geocloud_tile_cache;
-use crate::libs::utils::{is_png, ServerConfig, ZXY};
+use crate::libs::utils::{is_png, ZXY};
 
 #[derive(FromForm)]
 pub(crate) struct GeoCloudQuery {
@@ -19,21 +19,15 @@ pub async fn get_geocloud(
     x: u32,
     y: u32,
     query: GeoCloudQuery,
-    config: &State<ServerConfig>,
+    config: &State<StateConfig>,
 ) -> Result<(ContentType, Vec<u8>), status::Custom<String>> {
     let zxy = ZXY {
         z: z.to_string(),
         x,
         y,
     };
-    match get_geocloud_tile_cache(
-        zxy,
-        query.layer,
-        config.tokens.geocloud.clone(),
-        query.tilematrixset,
-    )
-    .await
-    {
+    let tokens = config.tokens.read().unwrap().clone();
+    match get_geocloud_tile_cache(zxy, query.layer, tokens.geocloud, query.tilematrixset).await {
         Ok(body) => {
             if is_png(&body) {
                 Ok((ContentType::PNG, body))
