@@ -1,3 +1,4 @@
+pub mod config;
 pub mod docs;
 pub mod geocloud;
 pub mod index;

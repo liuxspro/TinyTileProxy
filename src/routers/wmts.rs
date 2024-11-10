@@ -1,4 +1,3 @@
-use crate::libs::utils::ServerConfig;
 use minijinja::{context, Environment};
 use rocket::http::Status;
 use rocket::request::{self, FromRequest, Outcome, Request};
@@ -6,6 +5,8 @@ use rocket::response::content::RawXml;
 use rocket::State;
 
 use rust_embed::Embed;
+
+use crate::libs::config::StateConfig;
 
 #[derive(Embed)]
 #[folder = "assets"]
@@ -34,8 +35,9 @@ impl<'r> FromRequest<'r> for HostFromHeader {
 }
 
 #[get("/WMTS/geocloud")]
-pub fn get_geocloud_wmts(host: HostFromHeader, config: &State<ServerConfig>) -> RawXml<String> {
-    let proto = if config.use_https { "https" } else { &host.0 };
+pub fn get_geocloud_wmts(host: HostFromHeader, config: &State<StateConfig>) -> RawXml<String> {
+    let use_https = config.use_https.read().unwrap().clone();
+    let proto = if use_https { "https" } else { &host.0 };
     let address = format!("{}://{}", proto, host.1);
 
     let wmts_xml = Asset::get("templates/geocloud.xml").unwrap();
@@ -48,8 +50,9 @@ pub fn get_geocloud_wmts(host: HostFromHeader, config: &State<ServerConfig>) -> 
 }
 
 #[get("/WMTS/jl1")]
-pub fn get_jl1_wmts(host: HostFromHeader, config: &State<ServerConfig>) -> RawXml<String> {
-    let proto = if config.use_https { "https" } else { &host.0 };
+pub fn get_jl1_wmts(host: HostFromHeader, config: &State<StateConfig>) -> RawXml<String> {
+    let use_https = config.use_https.read().unwrap().clone();
+    let proto = if use_https { "https" } else { &host.0 };
     let address = format!("{}://{}", proto, host.1);
 
     let wmts_xml = Asset::get("templates/jl1.xml").unwrap();
