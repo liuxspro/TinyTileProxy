@@ -8,18 +8,18 @@ name = "TinyTileProxy"
 path = "src/main.rs"
 
 [dependencies]
+anyhow = "1.0.91"
 figment = { version = "0.10", features = ["toml"] }
+image = "0.25.4"
+minijinja = "2.3.1"
 reqwest = { version = "0.12", features = [
     "gzip",
     "rustls-tls",
 ], default-features = false }
-serde = { version = "1.0", features = ["derive"] }
 rocket = { version = "0.5.1", features = ["json"] }
 rust-embed = "8.5.0"
-image = "0.25.4"
+serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
-minijinja = "2.3.1"
-anyhow = "1.0.91"
 toml = "0.8.19"
 
 # https://doc.rust-lang.org/cargo/reference/profiles.html
