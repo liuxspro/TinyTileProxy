@@ -15,7 +15,10 @@ export default defineConfig({
     sidebar: [
       {
         text: "Ueage",
-        items: [{ text: "Proxys", link: "/proxys" }],
+        items: [
+          { text: "Proxys", link: "/proxys" },
+          { text: "Setting", link: "/setting" },
+        ],
       },
     ],
 

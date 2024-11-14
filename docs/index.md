@@ -13,6 +13,9 @@ hero:
     - theme: brand
       text: 开始使用
       link: /proxys
+    - theme: alt
+      text: 配置Tokens
+      link: /setting
 
 features:
   - title: 📄 WMTS Proxy 服务
