@@ -13,6 +13,7 @@ pub struct ServerConfig {
     pub address: String,
     pub port: u32,
     pub use_https: bool,
+    pub password: String,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -44,6 +45,7 @@ fn default_config() -> Config {
         address: "127.0.0.1".to_string(),
         port: 8000,
         use_https: false,
+        password: "ttp123456".to_string(),
     };
     let tokens = Tokens {
         geocloud: "".to_string(),

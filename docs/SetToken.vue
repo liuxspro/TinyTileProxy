@@ -1,29 +1,38 @@
 <template>
-    <div style="margin-top: 2em">
+    <div id="pwdcontainer" style="margin-top: 2em">
+        <div class="pwd">
+            <label>请输入密码:</label>
+            <input v-model="pwd" placeholder="请输入密码" />
+            <button @click="auth">访问</button>
+        </div>
+    </div>
+    <div style="margin-top: 2em" id="tkset" v-if="authed">
         <div class="tk">
             <label>吉林一号 Token:</label>
-            <input v-model="tokens.jl1" placeholder="未设置,请输入:" />
+            <input v-model="tokens.jl1" placeholder="未设置,请输入" />
         </div>
         <div class="tk">
             <label>吉林一号(共生地球) Token:</label>
-            <input v-model="tokens.jl1earth" placeholder="未设置,请输入:" />
+            <input v-model="tokens.jl1earth" placeholder="未设置,请输入" />
         </div>
         <div class="tk">
             <label>地质云 Token:</label>
-            <input v-model="tokens.geocloud" placeholder="未设置,请输入:" />
+            <input v-model="tokens.geocloud" placeholder="未设置,请输入" />
         </div>
-    </div>
-    <div class="save">
-        <button @click="saveToken">保存</button>
+        <div class="save">
+            <button @click="saveToken">保存</button>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+const pwd = ref("");
+const authed = ref(false);
 const tokens = ref({ jl1: "", jl1earth: "", geocloud: "" });
 
 async function getTokens() {
-    const r = await fetch("/config/tokens");
+    const r = await fetch(`/config/tokens?pwd=${pwd.value}`);
     const tk = await r.json();
     return tk;
 }
@@ -36,7 +45,7 @@ async function saveToken() {
         },
         body: JSON.stringify(tokens.value),
     };
-    const r = await fetch("/config/set_tokens", options);
+    const r = await fetch(`/config/set_tokens?pwd=${pwd.value}`, options);
     const ok = await r.text();
     if (ok == "ok") {
         alert("已保存");
@@ -45,9 +54,16 @@ async function saveToken() {
     }
 }
 
-onMounted(async () => {
-    tokens.value = await getTokens();
-});
+async function auth() {
+    const r = await fetch(`/config/auth?pwd=${pwd.value}`);
+    const ok = await r.text();
+    if (ok == "Ok") {
+        authed.value = true;
+        tokens.value = await getTokens();
+    } else {
+        alert("密码错误");
+    }
+}
 </script>
 
 <style scoped>
@@ -64,10 +80,12 @@ input::placeholder {
     padding-left: 0.5em;
 }
 
-div.tk {
+div.tk,
+div.pwd {
     display: flex;
     gap: 2em;
     margin-bottom: 0.4em;
+    align-items: center;
 }
 
 div.save {
@@ -75,7 +93,7 @@ div.save {
 }
 
 button {
-    padding: 0.5em 1.8em;
+    padding: 0.4em 1.4em;
     border-radius: 0.8em;
     color: var(--vp-button-brand-text);
     background-color: var(--vp-button-brand-bg);

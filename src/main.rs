@@ -13,7 +13,7 @@ use libs::config::{
     create_default_config_file, get_tk_from_local_config, ServerConfig, StateConfig,
 };
 use libs::utils::create_cache_dir;
-use routers::config::{set_tokens, show_tokens};
+use routers::config::{auth, set_tokens, show_tokens};
 use routers::docs::{docs, static_file};
 use routers::geocloud::get_geocloud;
 use routers::index::{favicon, index};
@@ -44,7 +44,8 @@ fn rocket() -> _ {
         static_file,
         favicon,
         show_tokens,
-        set_tokens
+        set_tokens,
+        auth
     ];
     routers.extend(wmts::routers());
 
