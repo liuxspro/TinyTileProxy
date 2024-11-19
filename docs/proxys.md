@@ -16,12 +16,12 @@ import GetAddress from "./GetAddress.vue"
 访问 [吉林 1 号官网](https://www.jl1mall.com/rskit/MyRSservice) 获取 TK
 :::
 
-可通过 WMTS 链接加载
+Arcmap / Arcgis Pro 可通过 WMTS 服务加载
 
+WMTS服务地址:
 <GetAddress path="/WMTS/jl1"/>
 
-或 XYZ 链接加载
-
+XYZ 服务地址:
 <GetAddress path="/getTile/jl1/{z}/{x}/{y}?mk=73ad26c4aa6957eef051ecc5a15308b4"/>
 
 > 2023 年度全国高质量一张图 mk: `73ad26c4aa6957eef051ecc5a15308b4`
@@ -31,8 +31,9 @@ import GetAddress from "./GetAddress.vue"
 
 ## 地质云
 
-可通过 WMTS 链接加载
+可通过 WMTS 服务加载
 
+WMTS服务地址:
 <GetAddress path="/WMTS/geocloud"/>
 
 目前代理的地图有
