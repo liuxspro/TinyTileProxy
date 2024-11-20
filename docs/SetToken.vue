@@ -2,9 +2,10 @@
     <div id="pwdcontainer" style="margin-top: 2em">
         <div class="pwd">
             <label>请输入密码:</label>
-            <input v-model="pwd" placeholder="请输入密码" />
+            <input v-model="pwd" placeholder="请输入密码" type="password" />
             <button @click="auth">访问</button>
         </div>
+        <p class="tip" v-if="pwd == 'ttp123456'">请注意修改默认密码!</p>
     </div>
     <div style="margin-top: 2em" id="tkset" v-if="authed">
         <div class="tk">
@@ -97,5 +98,10 @@ button {
     border-radius: 0.8em;
     color: var(--vp-button-brand-text);
     background-color: var(--vp-button-brand-bg);
+}
+
+p.tip {
+    color: red;
+    font-size: 0.85em;
 }
 </style>
