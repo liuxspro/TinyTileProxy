@@ -2388,7 +2388,7 @@ dependencies = [
 
 [[package]]
 name = "tiny-tile-proxy"
-version = "0.1.7"
+version = "0.1.8"
 dependencies = [
  "anyhow",
  "figment",
