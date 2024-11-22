@@ -16,7 +16,6 @@ pub fn get_pwd() -> Result<String, figment::Error> {
 #[get("/config/auth?<q..>")]
 pub fn auth(q: PASS) -> String {
     let local_pwd = get_pwd().unwrap();
-    println!("{}", local_pwd);
     if q.pwd == local_pwd {
         return "Ok".to_string();
     } else {
