@@ -3,14 +3,20 @@ name = "tiny-tile-proxy"
 version = "0.1.7"
 edition = "2021"
 
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
 [[bin]]
 name = "TinyTileProxy"
 path = "src/main.rs"
 
-[dependencies]
+[workspace.dependencies]
 anyhow = "1.0.93"
+
+[dependencies]
+anyhow = { workspace = true }
 figment = { version = "0.10", features = ["toml"] }
-image = "0.25.5"
 minijinja = "2.3.1"
 reqwest = { version = "0.12", features = [
     "gzip",
@@ -21,6 +27,8 @@ rust-embed = "8.5.0"
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
 toml = "0.8.19"
+# My Crates
+webp_to_png = { path = "./crates/webp_to_png" }
 
 # https://doc.rust-lang.org/cargo/reference/profiles.html
 [profile.release]
