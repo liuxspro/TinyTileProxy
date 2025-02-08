@@ -13,13 +13,8 @@ pub struct ZXY {
 }
 
 pub fn is_png(data: &[u8]) -> bool {
-    let png_magic_number: [u8; 8] = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
-    // 检查数据长度是否至少为 8 字节
-    if data.len() < 8 {
-        return false;
-    }
-    // 比较前 8 个字节与 PNG 魔数
-    &data[..8] == png_magic_number
+    const PNG_MAGIC_NUMBER: [u8; 8] = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A];
+    data.len() >= 8 && data.starts_with(&PNG_MAGIC_NUMBER)
 }
 
 pub fn is_webp(data: &[u8]) -> bool {
@@ -83,9 +78,9 @@ pub fn get_map_names() -> HashMap<&'static str, &'static str> {
 }
 
 pub fn save_png(tile_path: PathBuf, buffer: &[u8]) -> AnyhowResult<bool> {
-    if is_png(&buffer) {
+    if is_png(buffer) {
         let mut tile_file = File::create(&tile_path)?;
-        tile_file.write_all(&buffer)?;
+        tile_file.write_all(buffer)?;
         Ok(true)
     } else {
         Err(anyhow!("Filed to save: Not A PNG File"))

@@ -47,8 +47,7 @@ pub struct StateConfig {
 }
 
 pub fn get_config() -> Figment {
-    let config = Figment::new().merge(Toml::file("config.toml"));
-    return config;
+    Figment::new().merge(Toml::file("config.toml"))
 }
 
 /// 创建默认配置文件

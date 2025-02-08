@@ -38,7 +38,7 @@ pub async fn get_tile_from_cache(
                     Ok(body)
                 }
             }
-            Err(e) => Err(e.into()),
+            Err(e) => Err(e),
         }
     }
 }
