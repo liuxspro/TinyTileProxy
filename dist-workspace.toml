@@ -9,5 +9,12 @@ cargo-dist-version = "0.28.0"
 ci = "github"
 # The installers to generate for each app
 installers = []
+allow-dirty = ["ci", "msi"]
+
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+targets = [
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin",
+    "x86_64-unknown-linux-gnu",
+    "x86_64-pc-windows-msvc",
+]
