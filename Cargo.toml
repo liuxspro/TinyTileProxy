@@ -16,3 +16,7 @@ lto = true        # 启用链接时优化, 减少生成的二进制文件的大�
 opt-level = "s"   # 设置优化级别
 panic = "unwind"  # 控制 panic 时的行为 unwind: 在 panic 时展开堆栈
 strip = true      # 控制是否剥离生成的二进制文件中的符号信息
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
