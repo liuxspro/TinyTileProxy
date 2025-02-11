@@ -2,7 +2,9 @@ use anyhow::{anyhow, Result as AnyhowResult};
 use std::fs::create_dir_all;
 use webp_to_png::webp_to_png;
 
-use super::utils::{get_cache_dir, get_map_names, is_webp, read_file, save_png};
+use super::utils::{get_cache_dir, get_map_names, read_file, save_png};
+
+use filetype::is_webp;
 use jilin1::get_tile;
 
 pub async fn get_tile_from_cache(
@@ -38,7 +40,7 @@ pub async fn get_tile_from_cache(
                     Ok(body)
                 }
             }
-            Err(e) => Err(e.into()),
+            Err(e) => Err(e),
         }
     }
 }

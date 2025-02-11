@@ -1,6 +1,8 @@
 [package]
 name = "tiny-tile-proxy"
+authors = ["liuxspro <liuxspro@gmail.com>"]
 version = "0.1.8"
+repository = "https://github.com/liuxspro/TinyTileProxy"
 edition = "2021"
 
 [[bin]]
@@ -20,3 +22,4 @@ toml = "0.8.19"
 # My Crates
 webp_to_png = { path = "../webp_to_png" }
 jilin1 = { path = "../jilin1" }
+filetype = { path = "../filetype" }

@@ -5,7 +5,9 @@ use std::collections::HashMap;
 
 use crate::libs::config::StateConfig;
 use crate::libs::geocloud::get_geocloud_tile_cache;
-use crate::libs::utils::{is_png, ZXY};
+use crate::libs::utils::ZXY;
+
+use filetype::is_png;
 
 #[derive(FromForm)]
 pub(crate) struct GeoCloudQuery {

@@ -36,7 +36,7 @@ impl<'r> FromRequest<'r> for HostFromHeader {
 
 #[get("/WMTS/geocloud")]
 pub fn get_geocloud_wmts(host: HostFromHeader, config: &State<StateConfig>) -> RawXml<String> {
-    let use_https = config.use_https.read().unwrap().clone();
+    let use_https = *config.use_https.read().unwrap();
     let proto = if use_https { "https" } else { &host.0 };
     let address = format!("{}://{}", proto, host.1);
 
@@ -51,7 +51,7 @@ pub fn get_geocloud_wmts(host: HostFromHeader, config: &State<StateConfig>) -> R
 
 #[get("/WMTS/jl1")]
 pub fn get_jl1_wmts(host: HostFromHeader, config: &State<StateConfig>) -> RawXml<String> {
-    let use_https = config.use_https.read().unwrap().clone();
+    let use_https = *config.use_https.read().unwrap();
     let proto = if use_https { "https" } else { &host.0 };
     let address = format!("{}://{}", proto, host.1);
 
