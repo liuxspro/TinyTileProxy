@@ -12,7 +12,7 @@ import GetAddress from "./GetAddress.vue"
 ## 吉林一号
 
 ::: danger ⚠️ 注意
-‼️ 请先在`config.toml`中填写自己的 token  
+‼️ 请先在请在 `Setting` 页面或`config.toml`中填写自己的 token  
 访问 [吉林 1 号官网](https://www.jl1mall.com/rskit/MyRSservice) 获取 TK
 :::
 
@@ -43,13 +43,11 @@ WMTS服务地址:
 - 基础地质图: 全国 1/100 万地质图
 - 基础地质图: 全国 1/50 万地质图
 - 基础地质图: 全国 1/20 万地质图
-- 水文地质: 中国地下水资源图
-- 水文地质: 中国水文地质图
 
 ::: danger ⚠️ 注意
-地质云需要 token,请自行从官网获取  
-公共 token 有时效性, 每几天需要更换新 token  
-请在`config.toml`中填写 token
+地质云需要 token,请自行从[官网](https://igss.cgs.gov.cn/admin/token/index.jsp)获取  
+<del>公共 token 有时效性, 每几天需要更换新 token</del>  
+请在 `Setting` 页面或者`config.toml`中填写 token
 :::
 
 > 视频演示:
