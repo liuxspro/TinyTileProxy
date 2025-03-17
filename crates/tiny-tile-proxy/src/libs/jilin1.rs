@@ -1,8 +1,9 @@
 use anyhow::{anyhow, Result as AnyhowResult};
+use std::collections::HashMap;
 use std::fs::create_dir_all;
 use webp_to_png::webp_to_png;
 
-use super::utils::{get_cache_dir, get_map_names, read_file, save_png};
+use super::utils::{get_cache_dir, read_file, save_png};
 
 use filetype::is_webp;
 use jilin1::get_tile;
@@ -100,4 +101,14 @@ pub async fn get_earthtile_from_cache(z: u32, x: u32, y: u32, tk: String) -> Any
             Err(e) => Err(e),
         }
     }
+}
+
+pub fn get_map_names() -> HashMap<&'static str, &'static str> {
+    let mut map_names = HashMap::new();
+
+    map_names.insert(
+        "73ad26c4aa6957eef051ecc5a15308b4",
+        "2023年度全国高质量一张图",
+    );
+    map_names
 }
