@@ -105,42 +105,6 @@
             <ResourceURL format="image/png" resourceType="tile"
                 template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=qg20_20210401_FCnDDRJd" />
         </Layer>
-        <Layer>
-            <ows:Title>6 中国地下水资源图</ows:Title>
-            <ows:Abstract>地质云 - 水文地质/中国地下水资源图</ows:Abstract>
-            <ows:WGS84BoundingBox>
-                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
-                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
-            </ows:WGS84BoundingBox>
-            <ows:Identifier>gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF</ows:Identifier>
-            <Style>
-                <ows:Identifier>default</ows:Identifier>
-            </Style>
-            <Format>image/png</Format>
-            <TileMatrixSetLink>
-                <TileMatrixSet>default028mmWithEPSG</TileMatrixSet>
-            </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile"
-                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF&amp;tilematrixset=EPSG:4326" />
-        </Layer>
-        <Layer>
-            <ows:Title>7 中国水文地质图</ows:Title>
-            <ows:Abstract>地质云 - 水文地质/中国水文地质图</ows:Abstract>
-            <ows:WGS84BoundingBox>
-                <ows:LowerCorner>73.49895477 3.83254099</ows:LowerCorner>
-                <ows:UpperCorner>135.08738708 53.55849838</ows:UpperCorner>
-            </ows:WGS84BoundingBox>
-            <ows:Identifier>gisdatamanageCZL:zgswdzt16175436_20220905_BbcQipWD</ows:Identifier>
-            <Style>
-                <ows:Identifier>default</ows:Identifier>
-            </Style>
-            <Format>image/png</Format>
-            <TileMatrixSetLink>
-                <TileMatrixSet>default028mmWithEPSG</TileMatrixSet>
-            </TileMatrixSetLink>
-            <ResourceURL format="image/png" resourceType="tile"
-                template="{{ base_url | safe }}/getTile/geocloud/{TileMatrix}/{TileCol}/{TileRow}?layer=gisdatamanageCZL:zgswdzt16175436_20220905_BbcQipWD&amp;tilematrixset=EPSG:4326" />
-        </Layer>
 
         <!-- 瓦片矩阵集 -->
         <TileMatrixSet>

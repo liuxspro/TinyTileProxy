@@ -3,7 +3,7 @@ use reqwest::Error;
 use std::collections::HashMap;
 use std::fs::create_dir_all;
 
-use super::utils::{get_cache_dir, get_map_names, read_file, save_png, ZXY};
+use super::utils::{get_cache_dir, read_file, save_png, ZXY};
 
 fn get_z_value(zxy: &ZXY) -> String {
     let z = &zxy.z;
@@ -93,4 +93,42 @@ pub async fn get_geocloud_tile_cache(
             Err(e) => Err(e.into()),
         }
     }
+}
+
+pub fn get_map_names() -> HashMap<&'static str, &'static str> {
+    // 地质云 服务接口 https://igss.cgs.gov.cn/admin/token/index.jsp
+    // 授权范围内一共 10 个服务
+    // 其中有 2 个为重复(使用 web 墨卡托投影)
+    let mut map_names = HashMap::new();
+    map_names.insert("qg20_20210401_FCnDDRJd", "全国1比20万地质图空间数据库");
+    map_names.insert("qg50w_20210416_F7qGy9A7", "全国1比50万地质图数据");
+    map_names.insert(
+        "全国100万地质图_20210330_rpam5kdJ",
+        "全国1比100万地质图空间数据",
+    );
+    map_names.insert("qg150w_20210416_BIwqE0wU", "全国1比150万地质图数据");
+    map_names.insert("qg250w_20210416_ZAZSeOGX", "全国1比250万地质图数据");
+    map_names.insert(
+        "gisdatamanageCZL:zgdzhjfqt2015556_20220902_jFEtRvYd",
+        "中国地质环境分区图",
+    );
+    map_names.insert(
+        "gisdatamanageCZL:hhhpytrxhjt24172036_20220905_bAcMBmmq",
+        "黄淮海平原土壤硒环境图",
+    );
+    map_names.insert(
+        "gisdatamanageCZL:0715zgdzhjaqcdt17155125_20220905_ejCKPwC4",
+        "中国地质环境安全程度图",
+    );
+    // 这两个不是授权范围内的
+    // map_names.insert(
+    //     "gisdatamanageCZL:500wdxszyt2616300_20220905_BhR4tgbF",
+    //     "中国地下水资源图",
+    // );
+    // map_names.insert(
+    //     "gisdatamanageCZL:zgswdzt16175436_20220905_BbcQipWD",
+    //     "中国水文地质图",
+    // );
+
+    map_names
 }

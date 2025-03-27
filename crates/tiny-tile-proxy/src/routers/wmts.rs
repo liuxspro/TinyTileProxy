@@ -7,6 +7,7 @@ use rocket::State;
 use rust_embed::Embed;
 
 use crate::libs::config::StateConfig;
+use capgen::{generate_capabilities, get_web_mercator_quad_matrixs, Layer, ServiceMetadata};
 
 #[derive(Embed)]
 #[folder = "assets"]
@@ -52,16 +53,35 @@ pub fn get_geocloud_wmts(host: HostFromHeader, config: &State<StateConfig>) -> R
 #[get("/WMTS/jl1")]
 pub fn get_jl1_wmts(host: HostFromHeader, config: &State<StateConfig>) -> RawXml<String> {
     let use_https = *config.use_https.read().unwrap();
+    let mks = config.jl1_mk.read().unwrap();
     let proto = if use_https { "https" } else { &host.0 };
     let address = format!("{}://{}", proto, host.1);
 
-    let wmts_xml = Asset::get("templates/jl1.xml").unwrap();
-    let file_content = String::from_utf8(wmts_xml.data.to_vec()).expect("filed to read");
-    let mut env = Environment::new();
-    env.add_template("jl1.xml", &file_content).unwrap();
-    let template = env.get_template("jl1.xml").unwrap();
-    let rendered = template.render(context! {base_url=> &address}).unwrap();
-    RawXml(rendered)
+    let service = ServiceMetadata {
+        title: "Tiny Tile Proxy".to_string(),
+        abstract_: "吉林一号卫星影像2".to_string(),
+        keywords: vec!["吉林一号".to_string()],
+    };
+
+    let layers = mks
+        .iter()
+        .map(|(k, v)| Layer {
+            title: v.to_string(),
+            abstract_: v.to_string(),
+            id: k.to_string(),
+            tile_matrix_set: "WebMercatorQuad".to_string(),
+            url: format!(
+                "{}/getTile/jl1/{{TileMatrix}}/{{TileCol}}/{{TileRow}}?mk={}",
+                address, k
+            ),
+        })
+        .collect();
+
+    let tile_matrix_set = get_web_mercator_quad_matrixs(0, 18);
+
+    let cap = generate_capabilities(&service, &layers, &tile_matrix_set).unwrap();
+
+    RawXml(cap)
 }
 
 #[get("/WMTS/XYZ")]
