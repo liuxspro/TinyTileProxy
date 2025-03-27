@@ -16,10 +16,11 @@ figment = { version = "0.10", features = ["toml"] }
 minijinja = "2.3.1"
 rocket = { version = "0.5.1", features = ["json"] }
 rust-embed = "8.5.0"
-serde = { version = "1.0", features = ["derive"] }
+serde = { workspace = true }
 tokio = { version = "1", features = ["full"] }
 toml = "0.8.19"
 # My Crates
 webp_to_png = { path = "../webp_to_png" }
 jilin1 = { path = "../jilin1" }
 filetype = { path = "../filetype" }
+capgen = { path = "../capgen" }

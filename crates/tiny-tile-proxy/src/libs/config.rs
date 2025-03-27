@@ -4,7 +4,10 @@ use figment::{
 };
 
 use serde::{Deserialize, Serialize};
-use std::sync::{Arc, RwLock};
+use std::{
+    collections::HashMap,
+    sync::{Arc, RwLock},
+};
 use std::{fs, path::Path};
 use toml::to_string;
 
@@ -34,16 +37,33 @@ pub struct Tokens {
     pub jl1earth: String,
 }
 
-#[derive(Deserialize, Serialize, Debug, Default)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Config {
     pub default: ServerConfig,
     pub tokens: Tokens,
+    pub jl1_mk: HashMap<String, String>,
+}
+
+impl Default for Config {
+    fn default() -> Self {
+        let mut mks = HashMap::new();
+        mks.insert(
+            "73ad26c4aa6957eef051ecc5a15308b4".to_string(),
+            "2023年度全国高质量一张图".to_string(),
+        );
+        Config {
+            default: ServerConfig::default(),
+            tokens: Tokens::default(),
+            jl1_mk: mks,
+        }
+    }
 }
 
 #[derive(Clone)]
 pub struct StateConfig {
     pub tokens: Arc<RwLock<Tokens>>,
     pub use_https: Arc<RwLock<bool>>,
+    pub jl1_mk: Arc<RwLock<HashMap<String, String>>>,
 }
 
 pub fn get_config() -> Figment {
@@ -68,6 +88,13 @@ pub fn get_tk_from_local_config() -> Result<Tokens, figment::Error> {
     let tk = config.tokens;
 
     Ok(tk)
+}
+
+pub fn get_jl1_mk_from_local_config() -> Result<HashMap<String, String>, figment::Error> {
+    let config: Config = get_config().extract()?;
+    let jl1_mk = config.jl1_mk;
+
+    Ok(jl1_mk)
 }
 
 /// 保存 Tokens 至配置文件

@@ -10,7 +10,8 @@ mod libs;
 mod routers;
 
 use libs::config::{
-    create_default_config_file, get_tk_from_local_config, ServerConfig, StateConfig,
+    create_default_config_file, get_jl1_mk_from_local_config, get_tk_from_local_config,
+    ServerConfig, StateConfig,
 };
 use libs::utils::create_cache_dir;
 use routers::config::{auth, set_tokens, show_tokens};
@@ -32,6 +33,7 @@ fn rocket() -> _ {
 
     // 获取 tk 值
     let tk = get_tk_from_local_config().unwrap();
+    let jl1_mk = get_jl1_mk_from_local_config().unwrap();
 
     let config: ServerConfig = figment.clone().extract().expect("Failed to extract config");
 
@@ -53,6 +55,7 @@ fn rocket() -> _ {
         .manage(StateConfig {
             tokens: Arc::new(RwLock::new(tk)),
             use_https: Arc::new(RwLock::new(config.use_https)),
+            jl1_mk: Arc::new(RwLock::new(jl1_mk)),
         })
         .mount("/", routers)
 }
