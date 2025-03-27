@@ -1,7 +1,7 @@
 [package]
 name = "tiny-tile-proxy"
 authors = ["liuxspro <liuxspro@gmail.com>"]
-version = "0.1.9"
+version = "0.1.10"
 repository = "https://github.com/liuxspro/TinyTileProxy"
 edition = "2021"
 
