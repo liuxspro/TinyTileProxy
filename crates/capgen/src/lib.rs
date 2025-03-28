@@ -48,7 +48,8 @@ pub struct TileMatrixSet {
 pub fn generate_tile_matrix_set(min_zoom: u32, max_zoom: u32) -> Vec<TileMatrix> {
     (min_zoom..=max_zoom)
         .map(|zoom| {
-            let base_scale = 559_082_264.02871774;
+            // 精度问题只能存到小数后 7 位，因为前面整数已经有 9 位了
+            let base_scale: f64 = 559_082_264.028_717_8;
             let scale = base_scale / 2f64.powi(zoom as i32);
             let matrix_size = 2u32.pow(zoom);
 
