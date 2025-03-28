@@ -59,11 +59,11 @@ pub fn get_jl1_wmts(host: HostFromHeader, config: &State<StateConfig>) -> RawXml
 
     let service = ServiceMetadata {
         title: "Tiny Tile Proxy".to_string(),
-        abstract_: "吉林一号卫星影像2".to_string(),
+        abstract_: "吉林一号 Proxy".to_string(),
         keywords: vec!["吉林一号".to_string()],
     };
 
-    let layers = mks
+    let mut layers: Vec<Layer> = mks
         .iter()
         .map(|(k, v)| Layer {
             title: v.to_string(),
@@ -76,6 +76,19 @@ pub fn get_jl1_wmts(host: HostFromHeader, config: &State<StateConfig>) -> RawXml
             ),
         })
         .collect();
+
+    let jl1_earth_layer: Layer = Layer {
+        title: "2023年度全国高质量一张图（共生地球）".to_string(),
+        abstract_: "2023年度全国高质量一张图（共生地球）".to_string(),
+        id: "jl1earth".to_string(),
+        tile_matrix_set: "WebMercatorQuad".to_string(),
+        url: format!(
+            "{}/getTile/jl1earth/{{TileMatrix}}/{{TileCol}}/{{TileRow}}",
+            address
+        ),
+    };
+
+    layers.push(jl1_earth_layer);
 
     let tile_matrix_set = get_web_mercator_quad_matrixs(0, 18);
 
