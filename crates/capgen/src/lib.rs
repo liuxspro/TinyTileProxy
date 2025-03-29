@@ -45,7 +45,7 @@ pub struct TileMatrixSet {
 /// - `max_zoom` - 最大级别
 /// ## Returns
 /// 返回  TileMatrix 集合
-pub fn generate_tile_matrix_set(min_zoom: u32, max_zoom: u32) -> Vec<TileMatrix> {
+pub fn generate_tile_matrixs(min_zoom: u32, max_zoom: u32) -> Vec<TileMatrix> {
     (min_zoom..=max_zoom)
         .map(|zoom| {
             // 精度问题只能存到小数后 7 位，因为前面整数已经有 9 位了
@@ -79,7 +79,7 @@ pub fn get_web_mercator_quad_matrixs(min_zoom: u32, max_zoom: u32) -> TileMatrix
         identifier: "WebMercatorQuad".to_string(),
         supported_crs: "urn:ogc:def:crs:EPSG:6.18.3:3857".to_string(),
         well_known_scale_set: "urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible".to_string(),
-        tile_matrixs: generate_tile_matrix_set(min_zoom, max_zoom),
+        tile_matrixs: generate_tile_matrixs(min_zoom, max_zoom),
     }
 }
 
