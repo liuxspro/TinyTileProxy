@@ -13,7 +13,7 @@ path = "src/main.rs"
 anyhow = { workspace = true }
 reqwest = { workspace = true }
 figment = { version = "0.10", features = ["toml"] }
-minijinja = "2.3.1"
+minijinja = { version = "2" }
 rocket = { version = "0.5.1", features = ["json"] }
 rust-embed = "8.5.0"
 serde = { workspace = true }
