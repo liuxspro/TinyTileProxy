@@ -63,16 +63,4 @@ WMTS服务地址:
 
 ## 常用 XYZ 服务转 WMTS
 
-> 直连无代理
-
-支持以下地图:
-
-- Open Street Map
-- Google Map
-
-可通过 WMTS 链接加载
-<GetAddress path="/WMTS/XYZ"/>
-
-::: info
-🤔 适合在 Arcmap 中使用
-:::
+参见另一个项目 [liuxspro/wmts](https://github.com/liuxspro/wmts)
