@@ -1,14 +1,14 @@
 use super::config::get_jl1_mk_from_local_config;
-use super::utils::{get_cache_dir, read_file, save_png};
+use super::utils::{get_cache_dir, read_file, save_tile};
 use std::collections::HashMap;
 use std::sync::OnceLock;
 
 use anyhow::{anyhow, Result as AnyhowResult};
 use std::fs::create_dir_all;
-use webp_to_png::webp_to_png;
+// use webp_to_png::webp_to_png;
 
-use filetype::is_webp;
-use jilin1::get_tile;
+// use filetype::is_webp;
+use jilin1::get_jpg_tile;
 
 static JL1_MKS: OnceLock<HashMap<String, String>> = OnceLock::new();
 
@@ -23,24 +23,17 @@ pub async fn get_tile_from_cache(
     let cache_dir = get_cache_dir();
     let map_dir = cache_dir.join(format!("吉林1号/{}", map_names.get(&mk).unwrap_or(&mk)));
     let tile_dir = map_dir.join(format!("{}/{}/", z, x));
-    let tile_path = tile_dir.join(format!("{}.png", y));
+    let tile_path = tile_dir.join(format!("{}.jpg", y));
     if tile_path.exists() {
         let png_data = read_file(&tile_path)?;
         Ok(png_data)
     } else {
         create_dir_all(&tile_dir).expect("Filed to create Tile Dir");
-        match get_tile(z, x, y, mk, tk).await {
+        match get_jpg_tile(z, x, y, mk, tk).await {
             Ok(body) => {
-                // 缓存瓦片，将 webp 转为 png 保存
-                // 存在一些瓦片实际上是 png 格式的(透明)，这里做一下检查
-                if is_webp(&body) {
-                    let png_data = webp_to_png(body).unwrap();
-                    save_png(tile_path, &png_data)?;
-                    Ok(png_data)
-                } else {
-                    save_png(tile_path, &body)?;
-                    Ok(body)
-                }
+                // 缓存瓦片
+                save_tile(tile_path, &body)?;
+                Ok(body)
             }
             Err(e) => Err(e),
         }
@@ -80,7 +73,7 @@ pub async fn get_earthtile_from_cache(z: u32, x: u32, y: u32, tk: String) -> Any
     let cache_dir = get_cache_dir();
     let map_dir = cache_dir.join("吉林1号/2023年度全国高质量一张图 - 共生地球");
     let tile_dir = map_dir.join(format!("{}/{}/", z, x));
-    let tile_path = tile_dir.join(format!("{}.png", y));
+    let tile_path = tile_dir.join(format!("{}.webp", y));
     if tile_path.exists() {
         let png_data = read_file(&tile_path)?;
         Ok(png_data)
@@ -88,16 +81,8 @@ pub async fn get_earthtile_from_cache(z: u32, x: u32, y: u32, tk: String) -> Any
         create_dir_all(&tile_dir).expect("Filed to create Tile Dir");
         match get_jlearth_tile(z, x, y, tk).await {
             Ok(body) => {
-                // 缓存瓦片，将 webp 转为 png 保存
-                // 存在一些瓦片实际上是 png 格式的(透明)，这里做一下检查
-                if is_webp(&body) {
-                    let png_data = webp_to_png(body).unwrap();
-                    save_png(tile_path, &png_data)?;
-                    Ok(png_data)
-                } else {
-                    save_png(tile_path, &body)?;
-                    Ok(body)
-                }
+                save_tile(tile_path, &body)?;
+                Ok(body)
             }
             Err(e) => Err(e),
         }

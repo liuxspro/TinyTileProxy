@@ -20,7 +20,7 @@ serde = { workspace = true }
 tokio = { version = "1", features = ["full"] }
 toml = "0.8.19"
 # My Crates
-webp_to_png = { path = "../webp_to_png" }
+# webp_to_png = { git = "https://github.com/liuxspro/libs" }
 jilin1 = { path = "../jilin1" }
 filetype = { path = "../filetype" }
 capgen = { path = "../capgen" }

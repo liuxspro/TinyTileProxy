@@ -45,3 +45,9 @@ pub fn save_png(tile_path: PathBuf, buffer: &[u8]) -> AnyhowResult<bool> {
         Err(anyhow!("Filed to save: Not A PNG File"))
     }
 }
+
+pub fn save_tile(tile_path: PathBuf, buffer: &[u8]) -> AnyhowResult<bool> {
+    let mut tile_file = File::create(&tile_path)?;
+    tile_file.write_all(buffer)?;
+    Ok(true)
+}
